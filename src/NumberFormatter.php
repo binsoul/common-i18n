@@ -35,7 +35,7 @@ interface NumberFormatter
      *
      * @return string
      */
-    public function formatCurrency($value, $currencyCode);
+    public function formatCurrency($value, $currencyCode = '');
 
     /**
      * Returns a new instance with the given locale.
