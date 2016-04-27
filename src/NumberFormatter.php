@@ -27,7 +27,7 @@ interface NumberFormatter
      *
      * @return string
      */
-    public function formatPercent(float $value, $decimals = null): string;
+    public function formatPercent(float $value, int $decimals = null): string;
 
     /**
      * Formats a decimal number as a currency value.
@@ -44,7 +44,7 @@ interface NumberFormatter
      *
      * @param Locale $locale
      *
-     * @return self
+     * @return Locale
      */
-    public function withLocale(Locale $locale): self;
+    public function withLocale(Locale $locale): Locale;
 }
