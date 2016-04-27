@@ -44,7 +44,7 @@ interface NumberFormatter
      *
      * @param Locale $locale
      *
-     * @return Locale
+     * @return NumberFormatter
      */
-    public function withLocale(Locale $locale): Locale;
+    public function withLocale(Locale $locale): NumberFormatter;
 }
