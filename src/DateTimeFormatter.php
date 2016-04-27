@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace BinSoul\Common\I18n;
 
 /**
@@ -15,7 +17,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatPattern(\DateTimeInterface $datetime, $pattern);
+    public function formatPattern(\DateTimeInterface $datetime, string $pattern): string;
 
     /**
      * Formats the given time in the standard format.
@@ -24,7 +26,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatTime(\DateTimeInterface $time);
+    public function formatTime(\DateTimeInterface $time): string;
 
     /**
      * Formats the given time in the standard format including seconds.
@@ -33,7 +35,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatTimeWithSeconds(\DateTimeInterface $time);
+    public function formatTimeWithSeconds(\DateTimeInterface $time): string;
 
     /**
      * Formats the given date in the standard format.
@@ -42,7 +44,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatDate(\DateTimeInterface $date);
+    public function formatDate(\DateTimeInterface $date): string;
 
     /**
      * Formats the given date and time in the standard format.
@@ -51,7 +53,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatDateTime(\DateTimeInterface $datetime);
+    public function formatDateTime(\DateTimeInterface $datetime): string;
 
     /**
      * Formats the given date and time in the standard format including seconds.
@@ -60,7 +62,7 @@ interface DateTimeFormatter
      *
      * @return string
      */
-    public function formatDateTimeWithSeconds(\DateTimeInterface $datetime);
+    public function formatDateTimeWithSeconds(\DateTimeInterface $datetime): string;
 
     /**
      * Returns a new instance with the given locale.
@@ -69,5 +71,5 @@ interface DateTimeFormatter
      *
      * @return self
      */
-    public function withLocale(Locale $locale);
+    public function withLocale(Locale $locale): self;
 }

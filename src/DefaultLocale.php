@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace BinSoul\Common\I18n;
 
 /**
@@ -37,15 +39,16 @@ class DefaultLocale implements Locale
      * @param string   $prefix
      */
     public function __construct(
-        $language = 'root',
-        $region = '',
-        $script = '',
-        $variants = [],
-        $modifiers = [],
-        $extensions = [],
-        $private = [],
-        $prefix = ''
-    ) {
+        string $language = 'root',
+        string $region = '',
+        string $script = '',
+        array $variants = [],
+        array $modifiers = [],
+        array $extensions = [],
+        array $private = [],
+        string $prefix = ''
+    )
+    {
         self::assertValidLanguage($language);
 
         $this->prefix = $prefix;
@@ -58,7 +61,7 @@ class DefaultLocale implements Locale
         $this->private = $private;
     }
 
-    public static function fromString($code, $separator = '-')
+    public static function fromString(string $code, string $separator = '-'): Locale
     {
         if ($code == '' || $code == 'root') {
             return new self('root');
@@ -143,7 +146,7 @@ class DefaultLocale implements Locale
         return new self($language, $region, $script, $variants, $modifiers, $extensions, $private, $prefix);
     }
 
-    public function getCode($separator = '-')
+    public function getCode(string $separator = '-'): string
     {
         $result = '';
         if ($this->prefix != '') {
@@ -189,47 +192,47 @@ class DefaultLocale implements Locale
         return $result;
     }
 
-    public function getPrefix()
+    public function getPrefix(): string
     {
         return $this->prefix;
     }
 
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
-    public function getScript()
+    public function getScript(): string
     {
         return $this->script;
     }
 
-    public function getRegion()
+    public function getRegion(): string
     {
         return $this->region;
     }
 
-    public function getVariants()
+    public function getVariants(): array
     {
         return $this->variants;
     }
 
-    public function getExtensions()
+    public function getExtensions(): array
     {
         return $this->extensions;
     }
 
-    public function getPrivate()
+    public function getPrivate(): array
     {
         return $this->private;
     }
 
-    public function getModifiers()
+    public function getModifiers(): array
     {
         return $this->modifiers;
     }
 
-    public function getParent()
+    public function getParent(): Locale
     {
         $result = clone $this;
 
@@ -246,17 +249,17 @@ class DefaultLocale implements Locale
         return $result;
     }
 
-    public function isRoot()
+    public function isRoot(): bool
     {
         return $this->prefix == '' && $this->language == 'root';
     }
 
-    public function isNeutral()
+    public function isNeutral(): bool
     {
         return $this->prefix == '' && $this->script == '' && $this->region == '' && count($this->variants) == 0;
     }
 
-    private static function parseModifiers($value)
+    private static function parseModifiers(string $value): array
     {
         $result = [];
         $modifiers = explode(';', $value);
@@ -277,7 +280,7 @@ class DefaultLocale implements Locale
      *
      * @return string[]
      */
-    private static function extractVariants(&$parts)
+    private static function extractVariants(array &$parts): array
     {
         $variants = [];
         while (count($parts) > 0 && preg_match('/([a-zA-Z]{5,8})|([0-9][a-zA-Z0-9]{3})/', $parts[0])) {
@@ -292,7 +295,7 @@ class DefaultLocale implements Locale
      *
      * @return string[]
      */
-    private static function extractExtensions(&$parts)
+    private static function extractExtensions(array &$parts): array
     {
         $extensions = [];
         while (count($parts) > 1 && strlen($parts[0]) == 1 && strtolower($parts[0]) != 'x') {
@@ -311,7 +314,7 @@ class DefaultLocale implements Locale
      *
      * @return string[]
      */
-    private static function extractPrivate(&$parts)
+    private static function extractPrivate(array &$parts): array
     {
         $private = [];
         if (count($parts) > 1 && strtolower($parts[0]) == 'x') {
@@ -327,7 +330,7 @@ class DefaultLocale implements Locale
     /**
      * @param $language
      */
-    private static function assertValidLanguage($language)
+    private static function assertValidLanguage(string $language)
     {
         if ($language == 'root') {
             return;

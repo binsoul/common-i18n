@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace BinSoul\Common\I18n;
 
 /**
@@ -15,7 +17,7 @@ interface NumberFormatter
      *
      * @return string
      */
-    public function formatDecimal($value, $decimals = null);
+    public function formatDecimal(float $value, int $decimals = null): string;
 
     /**
      * Formats a decimal number as a percent value.
@@ -25,7 +27,7 @@ interface NumberFormatter
      *
      * @return string
      */
-    public function formatPercent($value, $decimals = null);
+    public function formatPercent(float $value, $decimals = null): string;
 
     /**
      * Formats a decimal number as a currency value.
@@ -35,7 +37,7 @@ interface NumberFormatter
      *
      * @return string
      */
-    public function formatCurrency($value, $currencyCode = '');
+    public function formatCurrency(float $value, string $currencyCode = ''): string;
 
     /**
      * Returns a new instance with the given locale.
@@ -44,5 +46,5 @@ interface NumberFormatter
      *
      * @return self
      */
-    public function withLocale(Locale $locale);
+    public function withLocale(Locale $locale): self;
 }
