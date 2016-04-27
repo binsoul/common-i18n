@@ -69,7 +69,7 @@ interface DateTimeFormatter
      *
      * @param Locale $locale
      *
-     * @return self
+     * @return DateTimeFormatter
      */
-    public function withLocale(Locale $locale): self;
+    public function withLocale(Locale $locale): DateTimeFormatter;
 }

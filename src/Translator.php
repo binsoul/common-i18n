@@ -31,7 +31,7 @@ interface Translator
      *
      * @param Locale $locale
      *
-     * @return self
+     * @return Translator
      */
-    public function withLocale(Locale $locale): self;
+    public function withLocale(Locale $locale): Translator;
 }
