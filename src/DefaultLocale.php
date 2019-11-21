@@ -7,9 +7,9 @@ namespace BinSoul\Common\I18n;
 use InvalidArgumentException;
 
 /**
- * Provides a default implementation of the {@see Locale} interface.
+ * Provides a default implementation of the {@see Locale}, {@see ParsedLocale} and {@see LocaleParser} interfaces.
  */
-class DefaultLocale implements Locale
+class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 {
     /** @var string */
     private $prefix;
@@ -62,7 +62,7 @@ class DefaultLocale implements Locale
         $this->private = $private;
     }
 
-    public static function fromString(string $code, string $separator = '-'): Locale
+    public static function fromString(string $code, string $separator = '-'): ParsedLocale
     {
         if ($code === '' || $code === 'root') {
             return new self('root');
@@ -236,7 +236,7 @@ class DefaultLocale implements Locale
         return $this->modifiers;
     }
 
-    public function getParent(): Locale
+    public function getParent(): ParsedLocale
     {
         $result = clone $this;
 
