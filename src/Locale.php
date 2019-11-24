@@ -11,10 +11,6 @@ interface Locale
 {
     /**
      * Returns the complete code.
-     *
-     * @param string $separator
-     *
-     * @return string
      */
     public function getCode(string $separator = '-'): string;
 }

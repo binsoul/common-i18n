@@ -11,11 +11,6 @@ interface LocaleParser
 {
     /**
      * Parses the given code and returns a new instance.
-     *
-     * @param string $code
-     * @param string $separator
-     *
-     * @return ParsedLocale
      */
     public static function fromString(string $code, string $separator = '-'): ParsedLocale;
 }

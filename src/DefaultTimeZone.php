@@ -16,8 +16,6 @@ class DefaultTimeZone implements TimeZone
 
     /**
      * Constructs an instance of this class.
-     *
-     * @param string|null $timeZone
      */
     public function __construct(?string $timeZone = null)
     {

@@ -9,8 +9,5 @@ namespace  BinSoul\Common\I18n;
  */
 interface TimeZone
 {
-    /**
-     * @return string
-     */
     public function getName(): string;
 }

@@ -223,8 +223,6 @@ class DefaultAddressFormatter implements AddressFormatter
 
     /**
      * Constructs an instance of this class.
-     *
-     * @param Locale|null $locale
      */
     public function __construct(?Locale $locale = null)
     {
@@ -234,9 +232,6 @@ class DefaultAddressFormatter implements AddressFormatter
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function format(Address $address): string
     {
         $addressFormat = self::$formats[strtoupper((string) $address->getCountryCode())] ?? self::$defaultFormat;
@@ -280,9 +275,6 @@ class DefaultAddressFormatter implements AddressFormatter
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function withLocale(Locale $locale): AddressFormatter
     {
         return new DefaultAddressFormatter($locale);
@@ -290,10 +282,6 @@ class DefaultAddressFormatter implements AddressFormatter
 
     /**
      * Returns the localized name for the given country code.
-     *
-     * @param string $isoCode
-     *
-     * @return string
      */
     protected function isoCodeToName(string $isoCode): string
     {

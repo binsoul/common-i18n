@@ -31,14 +31,10 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
     /**
      * Constructs an instance of this class.
      *
-     * @param string     $language
-     * @param string     $script
-     * @param string     $region
      * @param string[]   $variants
      * @param string[]   $modifiers
      * @param string[][] $extensions
      * @param string[]   $private
-     * @param string     $prefix
      */
     public function __construct(
         string $language = 'root',
@@ -264,8 +260,6 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
     }
 
     /**
-     * @param string $value
-     *
      * @return string[]
      */
     private static function parseModifiers(string $value): array
@@ -355,9 +349,6 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         return $private;
     }
 
-    /**
-     * @param string $language
-     */
     private static function assertValidLanguage(string $language): void
     {
         if ($language === 'root') {
