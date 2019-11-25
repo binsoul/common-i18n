@@ -217,7 +217,7 @@ class DefaultAddressFormatter implements AddressFormatter
     ];
 
     /**
-     * @var Locale|null
+     * @var Locale
      */
     protected $locale;
 
