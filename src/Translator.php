@@ -10,16 +10,25 @@ namespace BinSoul\Common\I18n;
 interface Translator
 {
     /**
-     * @param mixed[] $variables
+     * Translates the given message.
+     *
+     * @param string|Message|PluralizedMessage $key        The message key
+     * @param mixed[]                          $parameters An array of parameters for the message
+     * @param string|null                      $domain     The domain for the message or null to use the default
+     *
+     * @return TranslatedMessage The translated message
      */
-    public function translateSingular(string $key, array $variables = []): string;
+    public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage;
 
     /**
-     * @param string  $key
-     * @param float   $amount
-     * @param mixed[] $variables
+     * Selects the plural form of the message for the given the quantity.
+     *
+     * @param string|Message $key      The message key
+     * @param float|int      $quantity The quantity for the message
+     *
+     * @return PluralizedMessage The pluralized message
      */
-    public function translatePlural($key, $amount, array $variables = []): string;
+    public function pluralize($key, $quantity): PluralizedMessage;
 
     /**
      * Returns a new instance with the given locale.

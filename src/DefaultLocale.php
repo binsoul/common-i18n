@@ -69,13 +69,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 
         $tags = explode('@', $code);
         if (count($tags) > 2) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected at most one @ but got %d in "%s".',
-                    count($tags) - 1,
-                    $code
-                )
-            );
+            throw new InvalidArgumentException(sprintf('Expected at most one @ but got %d in "%s".', count($tags) - 1, $code));
         }
 
         if (count($tags) === 2) {
@@ -97,12 +91,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         if (strlen($language) === 1) {
             $prefix = $language;
             if (count($tags) === 0) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Expected at least a language code in "%s".',
-                        $code
-                    )
-                );
+                throw new InvalidArgumentException(sprintf('Expected at least a language code in "%s".', $code));
             }
 
             $language = strtolower(array_shift($tags));
@@ -135,12 +124,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         $private = self::extractPrivate($tags);
 
         if (count($tags) > 0) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Could not resolve all parts of "%s".',
-                    $code
-                )
-            );
+            throw new InvalidArgumentException(sprintf('Could not resolve all parts of "%s".', $code));
         }
 
         return new self($language, $region, $script, $variants, $modifiers, $extensions, $private, $prefix);
@@ -357,12 +341,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 
         $length = strlen($language);
         if (!in_array($length, [2, 3, 5, 6, 7, 8], true)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Invalid language code in "%s".',
-                    $language
-                )
-            );
+            throw new InvalidArgumentException(sprintf('Invalid language code in "%s".', $language));
         }
     }
 }
