@@ -33,8 +33,8 @@ class DefaultTranslator implements Translator
                 $key->getFormat(),
                 $key->getKey(),
                 $this->locale,
-                $parameters,
-                $domain,
+                array_merge($key->getParameters(), $parameters),
+                $domain ?? $key->getDomain(),
                 $key->getQuantity()
             );
         }
