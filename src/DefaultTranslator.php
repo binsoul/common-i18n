@@ -19,10 +19,7 @@ class DefaultTranslator implements Translator
      */
     public function __construct(?Locale $locale = null)
     {
-        $this->locale = $locale;
-        if ($this->locale === null) {
-            $this->locale = DefaultLocale::fromString('de-DE');
-        }
+        $this->locale = $locale ?? DefaultLocale::fromString('de-DE');
     }
 
     public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage

@@ -226,10 +226,7 @@ class DefaultAddressFormatter implements AddressFormatter
      */
     public function __construct(?Locale $locale = null)
     {
-        $this->locale = $locale;
-        if ($this->locale === null) {
-            $this->locale = DefaultLocale::fromString('de-DE');
-        }
+        $this->locale = $locale ?? DefaultLocale::fromString('de-DE');
     }
 
     public function format(Address $address): string
