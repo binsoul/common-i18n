@@ -53,7 +53,7 @@ class DefaultTranslator implements Translator
         return new DefaultTranslatedMessage($key, $key, $key, $this->locale, $parameters, $domain);
     }
 
-    public function pluralize($key, $quantity): PluralizedMessage
+    public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage
     {
         if ($key instanceof Message) {
             return new DefaultPluralizedMessage(
@@ -61,11 +61,11 @@ class DefaultTranslator implements Translator
                 $key->getFormat(),
                 $quantity,
                 $key->getParameters(),
-                $key->getDomain()
+                $domain ?? $key->getDomain()
             );
         }
 
-        return new DefaultPluralizedMessage($key, $key, $quantity);
+        return new DefaultPluralizedMessage($key, $key, $quantity, [], $domain);
     }
 
     public function withLocale(Locale $locale): Translator

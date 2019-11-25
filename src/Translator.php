@@ -25,10 +25,11 @@ interface Translator
      *
      * @param string|Message $key      The message key
      * @param float|int      $quantity The quantity for the message
+     * @param string|null    $domain   The domain for the message or null to use the default
      *
      * @return PluralizedMessage The pluralized message
      */
-    public function pluralize($key, $quantity): PluralizedMessage;
+    public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage;
 
     /**
      * Returns a new instance with the given locale.
