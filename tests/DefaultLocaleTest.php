@@ -66,6 +66,17 @@ class DefaultLocaleTest extends TestCase
         $this->assertEquals('de/DE/x/foobar', $locale->getCode('/'));
     }
 
+    public function test_detects_unexpected_separator()
+    {
+        $this->assertEquals('x-de', DefaultLocale::fromString('x_de')->getCode());
+        $this->assertEquals('de-DE', DefaultLocale::fromString('de_DE')->getCode());
+        $this->assertEquals('de-CH-POSIX', DefaultLocale::fromString('de_CH_POSIX')->getCode());
+
+        $this->assertEquals('x-de', DefaultLocale::fromString('x/de')->getCode());
+        $this->assertEquals('de-DE', DefaultLocale::fromString('de/DE')->getCode());
+        $this->assertEquals('de-CH-POSIX', DefaultLocale::fromString('de/CH/POSIX')->getCode());
+    }
+
     public function test_getters()
     {
         $locale = DefaultLocale::fromString('x-he-Latn-IL-POSIX-u-ca-hebrew-tz-jeruslm-x-abc-def@foo=bar');

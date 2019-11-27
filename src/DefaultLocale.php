@@ -86,8 +86,20 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
             return new self('root', '', '', [], $modifiers);
         }
 
-        $prefix = '';
         $language = strtolower((string) array_shift($tags));
+
+        if (preg_match('([^a-z])', $language, $matches)) {
+            // real separator differs from the expected separator
+            $separator = $matches[0];
+            $tags = explode($separator, $target);
+            if ($tags === false) {
+                return new self('root', '', '', [], $modifiers);
+            }
+
+            $language = strtolower((string) array_shift($tags));
+        }
+
+        $prefix = '';
         if (strlen($language) === 1) {
             $prefix = $language;
             if (count($tags) === 0) {
