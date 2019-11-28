@@ -274,7 +274,11 @@ class DefaultAddressFormatter implements AddressFormatter
 
     public function withLocale(Locale $locale): AddressFormatter
     {
-        return new DefaultAddressFormatter($locale);
+        if ($locale->getCode() === $this->locale->getCode()) {
+            return $this;
+        }
+
+        return new self($locale);
     }
 
     /**
