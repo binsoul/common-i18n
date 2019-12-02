@@ -17,5 +17,5 @@ interface Country
     /**
      * Returns the ISO3 code.
      */
-    public function getIso3(): string;
+    public function getIso3(): ?string;
 }
