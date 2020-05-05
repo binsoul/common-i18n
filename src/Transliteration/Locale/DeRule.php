@@ -9,6 +9,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
  */
 class DeRule extends DefaultRule
 {
+    /**
+     * @var string[]
+     */
     private static $map = [
         'Ä' => 'Ae',
         'ä' => 'ae',

@@ -17,5 +17,5 @@ interface AddressFormatter
     /**
      * Returns a new instance with the given locale.
      */
-    public function withLocale(Locale $locale): AddressFormatter;
+    public function withLocale(Locale $locale): self;
 }

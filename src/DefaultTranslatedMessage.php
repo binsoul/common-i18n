@@ -13,10 +13,12 @@ class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessa
      * @var string
      */
     private $translation;
+
     /**
      * @var float|null
      */
     private $quantity;
+
     /**
      * @var Locale
      */
@@ -24,6 +26,8 @@ class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessa
 
     /**
      * Constructs an instance of this class.
+     *
+     * @param mixed[] $parameters
      */
     public function __construct(
         string $key,
@@ -41,12 +45,12 @@ class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessa
         $this->locale = $locale;
     }
 
-    public function getTranslation(): string
+    public function __toString(): string
     {
         return $this->translation;
     }
 
-    public function __toString(): string
+    public function getTranslation(): string
     {
         return $this->translation;
     }

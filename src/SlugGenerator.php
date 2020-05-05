@@ -12,5 +12,5 @@ interface SlugGenerator extends Transliterator
     /**
      * Returns a new instance with the given locale.
      */
-    public function withLocale(Locale $locale): SlugGenerator;
+    public function withLocale(Locale $locale): self;
 }

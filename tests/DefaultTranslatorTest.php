@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultLocale;
@@ -11,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class DefaultTranslatorTest extends TestCase
 {
-    public function test_translates_strings()
+    public function test_translates_strings(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = $translator->translate('test', ['a' => 'b'], 'domain');
@@ -24,7 +26,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertNull($message->getQuantity());
     }
 
-    public function test_translates_messages()
+    public function test_translates_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = new DefaultMessage('test', 'format', ['a' => 'b'], 'domain');
@@ -38,7 +40,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertNull($message->getQuantity());
     }
 
-    public function test_translates_pluralized_messages()
+    public function test_translates_pluralized_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = new DefaultPluralizedMessage('test', 'format', 1.5);
@@ -52,7 +54,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertEquals(1.5, $message->getQuantity());
     }
 
-    public function test_pluralizes_strings()
+    public function test_pluralizes_strings(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = $translator->pluralize('test', 1.5);
@@ -62,7 +64,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertEquals(1.5, $message->getQuantity());
     }
 
-    public function test_pluralizes_messages()
+    public function test_pluralizes_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = new DefaultMessage('test', 'format', ['a' => 'b'], 'domain');
@@ -75,7 +77,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertEquals('domain', $message->getDomain());
     }
 
-    public function test_uses_default_locale()
+    public function test_uses_default_locale(): void
     {
         $translator = new DefaultTranslator();
         $message = $translator->translate('test');
@@ -83,7 +85,7 @@ class DefaultTranslatorTest extends TestCase
         $this->assertInstanceOf(Locale::class, $message->getLocale());
     }
 
-    public function test_returns_instance_with_new_locale()
+    public function test_returns_instance_with_new_locale(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $sameTranslator = $translator->withLocale(DefaultLocale::fromString('de-DE'));

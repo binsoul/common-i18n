@@ -12,20 +12,16 @@ use BinSoul\Common\I18n\Transliteration\ToAsciiRule;
  */
 class DefaultSlugGenerator implements SlugGenerator
 {
-    private static $specialRules = [
-        '/[\pZ\pC]*+[&\|_\+]+[\pZ\pC]*/um' => '-', // convert concatenation signs to minus
-        '/[\/\\\\]/' => '-', // convert slashes to minus
-        '/[\pZ\pC]+/um' => '-', // convert white space to minus
-    ];
-
     /**
      * @var Locale
      */
     protected $locale;
+
     /**
      * @var string
      */
     protected $language;
+
     /**
      * @var TransliterationRule|null
      */
@@ -35,6 +31,15 @@ class DefaultSlugGenerator implements SlugGenerator
      * @var ToAsciiRule
      */
     protected $toAsciiRule;
+
+    /**
+     * @var string[]
+     */
+    private static $specialRules = [
+        '/[\pZ\pC]*+[&\|_\+]+[\pZ\pC]*/um' => '-', // convert concatenation signs to minus
+        '/[\/\\\\]/' => '-', // convert slashes to minus
+        '/[\pZ\pC]+/um' => '-', // convert white space to minus
+    ];
 
     /**
      * Constructs an instance of this class.
@@ -49,7 +54,8 @@ class DefaultSlugGenerator implements SlugGenerator
             $language = DefaultLocale::fromString($this->locale->getCode())->getLanguage();
         }
 
-        $localeRule = str_replace('DefaultRule', ucfirst($language).'Rule', DefaultRule::class);
+        $localeRule = str_replace('DefaultRule', ucfirst($language) . 'Rule', DefaultRule::class);
+
         if (class_exists($localeRule)) {
             $this->localeRule = new $localeRule();
         }
@@ -66,6 +72,7 @@ class DefaultSlugGenerator implements SlugGenerator
         }
 
         $result = trim($text);
+
         foreach ($rules as $rule) {
             $result = $rule->apply($result);
         }

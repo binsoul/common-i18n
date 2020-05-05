@@ -34,5 +34,5 @@ interface Translator
     /**
      * Returns a new instance with the given locale.
      */
-    public function withLocale(Locale $locale): Translator;
+    public function withLocale(Locale $locale): self;
 }

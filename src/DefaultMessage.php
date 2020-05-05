@@ -13,14 +13,17 @@ class DefaultMessage implements Message
      * @var string
      */
     private $key;
+
     /**
      * @var string
      */
     private $format;
+
     /**
-     * @var array
+     * @var mixed[]
      */
     private $parameters;
+
     /**
      * @var string|null
      */
@@ -28,6 +31,8 @@ class DefaultMessage implements Message
 
     /**
      * Constructs an instance of this class.
+     *
+     * @param mixed[] $parameters
      */
     public function __construct(
         string $key,

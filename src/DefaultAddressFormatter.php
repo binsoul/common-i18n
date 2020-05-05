@@ -9,6 +9,14 @@ namespace BinSoul\Common\I18n;
  */
 class DefaultAddressFormatter implements AddressFormatter
 {
+    /**
+     * @var Locale
+     */
+    protected $locale;
+
+    /**
+     * @var mixed[][]
+     */
     private static $formats = [
         //address_format, address_required, address_upcase
         'DZ' => ['%O%n%P %F %L%n%A%n%Z %C', null, ''],
@@ -197,6 +205,9 @@ class DefaultAddressFormatter implements AddressFormatter
         'BL' => ['%O%n%P %F %L%n%A%n%Z %C %X', 'ACZ', 'ACXL'],
     ];
 
+    /**
+     * @var string[]
+     */
     private static $defaultFormat = ['%N%n%O%n%A%n%C', 'AC', 'C'];
 
     /**
@@ -217,11 +228,6 @@ class DefaultAddressFormatter implements AddressFormatter
     ];
 
     /**
-     * @var Locale
-     */
-    protected $locale;
-
-    /**
      * Constructs an instance of this class.
      */
     public function __construct(?Locale $locale = null)
@@ -234,7 +240,8 @@ class DefaultAddressFormatter implements AddressFormatter
         $addressFormat = self::$formats[strtoupper((string) $address->getCountryCode())] ?? self::$defaultFormat;
 
         $format = $addressFormat[0] ?? self::$defaultFormat[0];
-        if (!strpos($format, '%R')) {
+
+        if (! strpos($format, '%R')) {
             $format .= '%n%R';
         }
 
@@ -259,9 +266,10 @@ class DefaultAddressFormatter implements AddressFormatter
         }
 
         $upperCase = $addressFormat[2] ?? self::$defaultFormat[2];
-        for ($i = 0, $iMax = \strlen($upperCase); $i < $iMax; ++$i) {
+
+        for ($i = 0, $iMax = \strlen($upperCase); $i < $iMax; $i++) {
             $char = $upperCase[$i];
-            $tokens['%'.$char] = mb_strtoupper($tokens['%'.$char] ?? '');
+            $tokens['%' . $char] = mb_strtoupper($tokens['%' . $char] ?? '');
         }
 
         $result = str_replace(array_keys($tokens), array_values($tokens), $format);

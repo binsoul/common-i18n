@@ -44,5 +44,5 @@ interface DateTimeFormatter
     /**
      * Returns a new instance with the given locale.
      */
-    public function withLocale(Locale $locale): DateTimeFormatter;
+    public function withLocale(Locale $locale): self;
 }

@@ -16,17 +16,19 @@ class ToAsciiRule implements TransliterationRule
         if (function_exists('transliterator_transliterate')) {
             try {
                 $converted = transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0080-\u7fff] remove', $result);
+
                 if ($converted !== false) {
                     $result = $converted;
                     $wasConverted = true;
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // ignore
             }
         }
 
-        if (!$wasConverted && function_exists('iconv')) {
+        if (! $wasConverted && function_exists('iconv')) {
             $converted = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $result);
+
             if ($converted !== false) {
                 $result = $converted;
             }

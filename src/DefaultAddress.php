@@ -13,50 +13,62 @@ class DefaultAddress implements Address
      * @var string|null
      */
     private $organization;
+
     /**
      * @var string|null
      */
     private $namePrefix;
+
     /**
      * @var string|null
      */
     private $firstName;
+
     /**
      * @var string|null
      */
     private $lastName;
+
     /**
      * @var string|null
      */
     private $addressLine1;
+
     /**
      * @var string|null
      */
     private $addressLine2;
+
     /**
      * @var string|null
      */
     private $addressLine3;
+
     /**
      * @var string|null
      */
     private $sortingCode;
+
     /**
      * @var string|null
      */
     private $postalCode;
+
     /**
      * @var string|null
      */
     private $locality;
+
     /**
      * @var string|null
      */
     private $dependentLocality;
+
     /**
      * @var string|null
      */
     private $adminArea;
+
     /**
      * @var string|null
      */

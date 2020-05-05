@@ -60,7 +60,7 @@ interface ParsedLocale extends Locale
     /**
      * Returns the parent locale.
      */
-    public function getParent(): ParsedLocale;
+    public function getParent(): self;
 
     /**
      * Indicates if the locale is the root locale.

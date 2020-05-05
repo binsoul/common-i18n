@@ -71,6 +71,6 @@ class DefaultTranslator implements Translator
             return $this;
         }
 
-        return new DefaultTranslator($locale);
+        return new self($locale);
     }
 }

@@ -11,6 +11,9 @@ use BinSoul\Common\I18n\TransliterationRule;
  */
 class DefaultRule implements TransliterationRule
 {
+    /**
+     * @var string[]
+     */
     private static $map = [
         '°' => '0',
         '¹' => '1',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultTimeZone;
@@ -7,13 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class DefaultTimeZoneTest extends TestCase
 {
-    public function test_getters()
+    public function test_getters(): void
     {
         $timeZone = new DefaultTimeZone('Europe/Berlin');
         $this->assertEquals('Europe/Berlin', $timeZone->getName());
     }
 
-    public function test_reads_default_time_zone()
+    public function test_reads_default_time_zone(): void
     {
         $currentTimeZone = date_default_timezone_get();
         $timeZone = new DefaultTimeZone();

@@ -18,6 +18,7 @@ class DefaultPluralizedMessage extends DefaultMessage implements PluralizedMessa
      * Constructs an instance of this class.
      *
      * @param int|float $quantity
+     * @param mixed[]   $parameters
      */
     public function __construct(
         string $key,

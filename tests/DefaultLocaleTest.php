@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultLocale;
@@ -29,7 +31,7 @@ class DefaultLocaleTest extends TestCase
     /**
      * @dataProvider validLocales
      */
-    public function test_parses_valid_codes($code)
+    public function test_parses_valid_codes($code): void
     {
         $this->assertEquals($code, DefaultLocale::fromString($code)->getCode());
     }
@@ -48,14 +50,14 @@ class DefaultLocaleTest extends TestCase
     /**
      * @dataProvider invalidLocales
      */
-    public function test_throws_exception_for_invalid_code($code)
+    public function test_throws_exception_for_invalid_code($code): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
         DefaultLocale::fromString($code);
     }
 
-    public function test_uses_separator()
+    public function test_uses_separator(): void
     {
         $locale = DefaultLocale::fromString('de_DE_x_foobar', '_');
         $this->assertEquals('de_DE_x_foobar', $locale->getCode('_'));
@@ -66,7 +68,7 @@ class DefaultLocaleTest extends TestCase
         $this->assertEquals('de/DE/x/foobar', $locale->getCode('/'));
     }
 
-    public function test_detects_unexpected_separator()
+    public function test_detects_unexpected_separator(): void
     {
         $this->assertEquals('x-de', DefaultLocale::fromString('x_de')->getCode());
         $this->assertEquals('de-DE', DefaultLocale::fromString('de_DE')->getCode());
@@ -77,7 +79,7 @@ class DefaultLocaleTest extends TestCase
         $this->assertEquals('de-CH-POSIX', DefaultLocale::fromString('de/CH/POSIX')->getCode());
     }
 
-    public function test_getters()
+    public function test_getters(): void
     {
         $locale = DefaultLocale::fromString('x-he-Latn-IL-POSIX-u-ca-hebrew-tz-jeruslm-x-abc-def@foo=bar');
         $this->assertEquals('x', $locale->getPrefix());
@@ -90,7 +92,7 @@ class DefaultLocaleTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $locale->getModifiers());
     }
 
-    public function test_get_parent()
+    public function test_get_parent(): void
     {
         $locale = DefaultLocale::fromString('x-de-Latn-CH-POSIX-u-ca-hebrew-x-abc@foo=bar');
         $locale = $locale->getParent();
@@ -103,7 +105,7 @@ class DefaultLocaleTest extends TestCase
         $this->assertEquals('x-root-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
     }
 
-    public function test_is_neutral()
+    public function test_is_neutral(): void
     {
         $this->assertTrue(DefaultLocale::fromString('de')->isNeutral());
         $this->assertTrue(DefaultLocale::fromString('de-u-tz-berlin')->isNeutral());
@@ -115,7 +117,7 @@ class DefaultLocaleTest extends TestCase
         $this->assertFalse(DefaultLocale::fromString('de-CH-POSIX')->isNeutral());
     }
 
-    public function test_is_root()
+    public function test_is_root(): void
     {
         $this->assertTrue(DefaultLocale::fromString('')->isRoot());
         $this->assertTrue(DefaultLocale::fromString('root')->isRoot());

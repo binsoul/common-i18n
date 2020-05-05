@@ -9,6 +9,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
  */
 class NbRule extends DefaultRule
 {
+    /**
+     * @var string[]
+     */
     private static $map = [
         'Æ' => 'AE',
         'æ' => 'ae',
