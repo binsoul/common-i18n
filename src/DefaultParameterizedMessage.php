@@ -45,6 +45,11 @@ class DefaultParameterizedMessage implements ParameterizedMessage, MessageDecora
         return $this->message->getDomain();
     }
 
+    public function withDomain(?string $domain): Message
+    {
+        return new self($this->message->withDomain($domain), $this->parameters);
+    }
+
     public function getParameters(): array
     {
         return $this->parameters;

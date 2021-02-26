@@ -45,6 +45,11 @@ class DefaultPluralizedMessage implements PluralizedMessage, MessageDecorator
         return $this->message->getDomain();
     }
 
+    public function withDomain(?string $domain): Message
+    {
+        return new self($this->message->withDomain($domain), $this->quantity);
+    }
+
     public function getQuantity(): float
     {
         return $this->quantity;

@@ -43,6 +43,11 @@ class DefaultStoredMessage implements StoredMessage
         return $this->message->getDomain();
     }
 
+    public function withDomain(?string $domain): Message
+    {
+        return new self($this->message->withDomain($domain), $this->format);
+    }
+
     public function getFormat(): string
     {
         return $this->format;

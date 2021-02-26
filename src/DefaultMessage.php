@@ -42,4 +42,9 @@ class DefaultMessage implements Message
     {
         return $this->domain;
     }
+
+    public function withDomain(?string $domain): Message
+    {
+        return new self($this->key, $domain);
+    }
 }

@@ -18,4 +18,9 @@ interface Message
      * Returns the domain.
      */
     public function getDomain(): ?string;
+
+    /**
+     * Returns a new message with the given domain.
+     */
+    public function withDomain(?string $domain): self;
 }

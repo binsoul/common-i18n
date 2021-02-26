@@ -6,6 +6,7 @@ namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultLocale;
 use BinSoul\Common\I18n\DefaultMessage;
+use BinSoul\Common\I18n\DefaultParameterizedMessage;
 use BinSoul\Common\I18n\DefaultPluralizedMessage;
 use BinSoul\Common\I18n\DefaultTranslator;
 use BinSoul\Common\I18n\Locale;
@@ -19,7 +20,6 @@ class DefaultTranslatorTest extends TestCase
         $message = $translator->translate('test', ['a' => 'b'], 'domain');
 
         $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('test', $message->getFormat());
         $this->assertEquals('test', $message->getTranslation());
         $this->assertEquals(['a' => 'b'], $message->getParameters());
         $this->assertEquals('domain', $message->getDomain());
@@ -29,11 +29,10 @@ class DefaultTranslatorTest extends TestCase
     public function test_translates_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
-        $message = new DefaultMessage('test', 'format', ['a' => 'b'], 'domain');
+        $message = new DefaultParameterizedMessage(new DefaultMessage('test', 'domain'), ['a' => 'b']);
         $message = $translator->translate($message);
 
         $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('format', $message->getFormat());
         $this->assertEquals('test', $message->getTranslation());
         $this->assertEquals(['a' => 'b'], $message->getParameters());
         $this->assertEquals('domain', $message->getDomain());
@@ -43,11 +42,10 @@ class DefaultTranslatorTest extends TestCase
     public function test_translates_pluralized_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
-        $message = new DefaultPluralizedMessage('test', 'format', 1.5);
+        $message = new DefaultPluralizedMessage(new DefaultMessage('test'), 1.5);
         $message = $translator->translate($message, ['a' => 'b'], 'domain');
 
         $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('format', $message->getFormat());
         $this->assertEquals('test', $message->getTranslation());
         $this->assertEquals(['a' => 'b'], $message->getParameters());
         $this->assertEquals('domain', $message->getDomain());
@@ -60,20 +58,17 @@ class DefaultTranslatorTest extends TestCase
         $message = $translator->pluralize('test', 1.5);
 
         $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('test', $message->getFormat());
         $this->assertEquals(1.5, $message->getQuantity());
     }
 
     public function test_pluralizes_messages(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
-        $message = new DefaultMessage('test', 'format', ['a' => 'b'], 'domain');
+        $message = new DefaultParameterizedMessage(new DefaultMessage('test', 'domain'), ['a' => 'b']);
         $message = $translator->pluralize($message, 1.5);
 
         $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('format', $message->getFormat());
         $this->assertEquals(1.5, $message->getQuantity());
-        $this->assertEquals(['a' => 'b'], $message->getParameters());
         $this->assertEquals('domain', $message->getDomain());
     }
 

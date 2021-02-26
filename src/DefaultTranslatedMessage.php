@@ -49,6 +49,11 @@ class DefaultTranslatedMessage implements TranslatedMessage, MessageDecorator
         return $this->message->getDomain();
     }
 
+    public function withDomain(?string $domain): Message
+    {
+        return new self($this->message->withDomain($domain), $this->translation, $this->locale);
+    }
+
     public function getParameters(): ?array
     {
         if ($this->message instanceof ParameterizedMessage) {

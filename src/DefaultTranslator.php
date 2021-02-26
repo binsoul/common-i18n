@@ -24,23 +24,33 @@ class DefaultTranslator implements Translator
 
     public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage
     {
-        if ($key instanceof StoredMessage) {
-            return new DefaultTranslatedMessage(
-                $key,
-                $key->getFormat(),
-                $this->locale,
-            );
-        }
-
         if ($key instanceof Message) {
+            if ($domain !== null) {
+                $key = $key->withDomain($domain);
+            }
+
+            if ($key instanceof StoredMessage) {
+                return new DefaultTranslatedMessage(
+                    count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
+                    $key->getFormat(),
+                    $this->locale,
+                );
+            }
+
             return new DefaultTranslatedMessage(
-                $key,
+                count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
                 $key->getKey(),
                 $this->locale,
             );
         }
 
-        return new DefaultTranslatedMessage(new DefaultMessage($key, $domain), $key, $this->locale);
+        $key = new DefaultMessage($key, $domain);
+
+        return new DefaultTranslatedMessage(
+            count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
+            $key->getKey(),
+            $this->locale
+        );
     }
 
     public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage
