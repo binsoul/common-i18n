@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultLocale;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class DefaultLocaleTest extends TestCase
@@ -52,7 +53,7 @@ class DefaultLocaleTest extends TestCase
      */
     public function test_throws_exception_for_invalid_code($code): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         DefaultLocale::fromString($code);
     }

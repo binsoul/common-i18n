@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BinSoul\Common\I18n\Transliteration;
 
 use BinSoul\Common\I18n\TransliterationRule;
+use Throwable;
 
 class ToAsciiRule implements TransliterationRule
 {
@@ -21,7 +22,7 @@ class ToAsciiRule implements TransliterationRule
                     $result = $converted;
                     $wasConverted = true;
                 }
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // ignore
             }
         }
