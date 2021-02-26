@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Provides a default implementation of the {@see PluralizedMessage} interface.
  */
-class DefaultPluralizedMessage implements Message, PluralizedMessage, MessageDecorator
+class DefaultPluralizedMessage implements PluralizedMessage, MessageDecorator
 {
     /**
      * @var Message

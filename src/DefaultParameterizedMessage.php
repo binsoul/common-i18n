@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Provides a default implementation of the {@see ParameterizedMessage} interface.
  */
-class DefaultParameterizedMessage implements Message, ParameterizedMessage, MessageDecorator
+class DefaultParameterizedMessage implements ParameterizedMessage, MessageDecorator
 {
     /**
      * @var Message

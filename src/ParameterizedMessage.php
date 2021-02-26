@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Represents a parameterized message.
  */
-interface ParameterizedMessage
+interface ParameterizedMessage extends Message
 {
     /**
      * Returns the parameters of the message.

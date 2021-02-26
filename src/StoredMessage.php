@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Represents a stored message.
  */
-interface StoredMessage
+interface StoredMessage extends Message
 {
     /**
      * Returns the format of the message.

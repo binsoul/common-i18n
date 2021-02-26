@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Provides a default implementation of the {@see StoredMessage} interface.
  */
-class DefaultStoredMessage implements Message, StoredMessage
+class DefaultStoredMessage implements StoredMessage
 {
     /**
      * @var Message
