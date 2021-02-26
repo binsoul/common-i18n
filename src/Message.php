@@ -15,18 +15,6 @@ interface Message
     public function getKey(): string;
 
     /**
-     * Returns the format of the message.
-     */
-    public function getFormat(): string;
-
-    /**
-     * Returns the parameters of the message.
-     *
-     * @return mixed[]
-     */
-    public function getParameters(): array;
-
-    /**
      * Returns the domain.
      */
     public function getDomain(): ?string;

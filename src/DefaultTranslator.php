@@ -24,45 +24,36 @@ class DefaultTranslator implements Translator
 
     public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage
     {
-        if ($key instanceof PluralizedMessage) {
+        if ($key instanceof StoredMessage) {
             return new DefaultTranslatedMessage(
-                $key->getKey(),
+                $key,
                 $key->getFormat(),
-                $key->getKey(),
                 $this->locale,
-                array_merge($key->getParameters(), $parameters),
-                $domain ?? $key->getDomain(),
-                $key->getQuantity()
             );
         }
 
         if ($key instanceof Message) {
             return new DefaultTranslatedMessage(
-                $key->getKey(),
-                $key->getFormat(),
+                $key,
                 $key->getKey(),
                 $this->locale,
-                array_merge($key->getParameters(), $parameters),
-                $domain ?? $key->getDomain()
             );
         }
 
-        return new DefaultTranslatedMessage($key, $key, $key, $this->locale, $parameters, $domain);
+        return new DefaultTranslatedMessage(new DefaultMessage($key, $domain), $key, $this->locale);
     }
 
     public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage
     {
-        if ($key instanceof Message) {
-            return new DefaultPluralizedMessage(
-                $key->getKey(),
-                $key->getFormat(),
-                $quantity,
-                $key->getParameters(),
-                $domain ?? $key->getDomain()
-            );
+        if ($key instanceof PluralizedMessage) {
+            return new DefaultPluralizedMessage(new DefaultMessage($key->getKey(), $domain ?? $key->getDomain()), $quantity);
         }
 
-        return new DefaultPluralizedMessage($key, $key, $quantity, [], $domain);
+        if ($key instanceof Message) {
+            return new DefaultPluralizedMessage($key, $quantity);
+        }
+
+        return new DefaultPluralizedMessage(new DefaultMessage($key, $domain), $quantity);
     }
 
     public function withLocale(Locale $locale): Translator

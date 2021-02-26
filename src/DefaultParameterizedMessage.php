@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BinSoul\Common\I18n;
 
 /**
- * Provides a default implementation of the {@see PluralizedMessage} interface.
+ * Provides a default implementation of the {@see ParameterizedMessage} interface.
  */
-class DefaultPluralizedMessage implements Message, PluralizedMessage, MessageDecorator
+class DefaultParameterizedMessage implements Message, ParameterizedMessage, MessageDecorator
 {
     /**
      * @var Message
@@ -15,19 +15,19 @@ class DefaultPluralizedMessage implements Message, PluralizedMessage, MessageDec
     private $message;
 
     /**
-     * @var float
+     * @var mixed[]
      */
-    private $quantity;
+    private $parameters;
 
     /**
      * Constructs an instance of this class.
      *
-     * @param int|float $quantity
+     * @param mixed[] $parameters
      */
-    public function __construct(Message $message, $quantity)
+    public function __construct(Message $message, array $parameters = [])
     {
         $this->message = $message;
-        $this->quantity = (float) $quantity;
+        $this->parameters = $parameters;
     }
 
     public function __toString(): string
@@ -45,9 +45,9 @@ class DefaultPluralizedMessage implements Message, PluralizedMessage, MessageDec
         return $this->message->getDomain();
     }
 
-    public function getQuantity(): float
+    public function getParameters(): array
     {
-        return $this->quantity;
+        return $this->parameters;
     }
 
     public function getDecoratedMessage(): Message

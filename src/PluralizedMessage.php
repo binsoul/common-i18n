@@ -7,7 +7,7 @@ namespace BinSoul\Common\I18n;
 /**
  * Represents a pluralized message.
  */
-interface PluralizedMessage extends Message
+interface PluralizedMessage
 {
     /**
      * Returns the quantity used for the message.

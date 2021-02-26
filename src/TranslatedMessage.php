@@ -20,6 +20,13 @@ interface TranslatedMessage extends Message
     public function getTranslation(): string;
 
     /**
+     * Returns the parameters of the message or null if no parameters were used.
+     *
+     * @return mixed[]|null
+     */
+    public function getParameters(): ?array;
+
+    /**
      * Returns the quantity used for the message or null if no quantity was used.
      */
     public function getQuantity(): ?float;

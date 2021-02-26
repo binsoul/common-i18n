@@ -7,17 +7,17 @@ namespace BinSoul\Common\I18n;
 /**
  * Provides a default implementation of the {@see TranslatedMessage} interface.
  */
-class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessage
+class DefaultTranslatedMessage implements TranslatedMessage, MessageDecorator
 {
+    /**
+     * @var Message
+     */
+    private $message;
+
     /**
      * @var string
      */
     private $translation;
-
-    /**
-     * @var float|null
-     */
-    private $quantity;
 
     /**
      * @var Locale
@@ -26,22 +26,11 @@ class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessa
 
     /**
      * Constructs an instance of this class.
-     *
-     * @param mixed[] $parameters
      */
-    public function __construct(
-        string $key,
-        string $format,
-        string $translation,
-        Locale $locale,
-        array $parameters = [],
-        ?string $domain = null,
-        ?float $quantity = null
-    ) {
-        parent::__construct($key, $format, $parameters, $domain);
-
+    public function __construct(Message $message, string $translation, Locale $locale)
+    {
+        $this->message = $message;
         $this->translation = $translation;
-        $this->quantity = $quantity;
         $this->locale = $locale;
     }
 
@@ -50,18 +39,66 @@ class DefaultTranslatedMessage extends DefaultMessage implements TranslatedMessa
         return $this->translation;
     }
 
+    public function getKey(): string
+    {
+        return $this->message->getKey();
+    }
+
+    public function getDomain(): ?string
+    {
+        return $this->message->getDomain();
+    }
+
+    public function getParameters(): ?array
+    {
+        if ($this->message instanceof ParameterizedMessage) {
+            return $this->message->getParameters();
+        }
+
+        $message = $this->message;
+
+        while ($message instanceof MessageDecorator) {
+            $message = $message->getDecoratedMessage();
+
+            if ($message instanceof ParameterizedMessage) {
+                return $message->getParameters();
+            }
+        }
+
+        return null;
+    }
+
+    public function getQuantity(): ?float
+    {
+        if ($this->message instanceof PluralizedMessage) {
+            return $this->message->getQuantity();
+        }
+
+        $message = $this->message;
+
+        while ($message instanceof MessageDecorator) {
+            $message = $message->getDecoratedMessage();
+
+            if ($message instanceof PluralizedMessage) {
+                return $message->getQuantity();
+            }
+        }
+
+        return null;
+    }
+
     public function getTranslation(): string
     {
         return $this->translation;
     }
 
-    public function getQuantity(): ?float
-    {
-        return $this->quantity;
-    }
-
     public function getLocale(): Locale
     {
         return $this->locale;
+    }
+
+    public function getDecoratedMessage(): Message
+    {
+        return $this->message;
     }
 }
