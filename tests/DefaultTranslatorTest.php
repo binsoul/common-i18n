@@ -19,11 +19,11 @@ class DefaultTranslatorTest extends TestCase
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = $translator->translate('test', ['a' => 'b'], 'domain');
 
-        $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('test', $message->getTranslation());
-        $this->assertEquals(['a' => 'b'], $message->getParameters());
-        $this->assertEquals('domain', $message->getDomain());
-        $this->assertNull($message->getQuantity());
+        self::assertEquals('test', $message->getKey());
+        self::assertEquals('test', $message->getTranslation());
+        self::assertEquals(['a' => 'b'], $message->getParameters());
+        self::assertEquals('domain', $message->getDomain());
+        self::assertNull($message->getQuantity());
     }
 
     public function test_translates_messages(): void
@@ -32,11 +32,11 @@ class DefaultTranslatorTest extends TestCase
         $message = new DefaultParameterizedMessage(new DefaultMessage('test', 'domain'), ['a' => 'b']);
         $message = $translator->translate($message);
 
-        $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('test', $message->getTranslation());
-        $this->assertEquals(['a' => 'b'], $message->getParameters());
-        $this->assertEquals('domain', $message->getDomain());
-        $this->assertNull($message->getQuantity());
+        self::assertEquals('test', $message->getKey());
+        self::assertEquals('test', $message->getTranslation());
+        self::assertEquals(['a' => 'b'], $message->getParameters());
+        self::assertEquals('domain', $message->getDomain());
+        self::assertNull($message->getQuantity());
     }
 
     public function test_translates_pluralized_messages(): void
@@ -45,11 +45,11 @@ class DefaultTranslatorTest extends TestCase
         $message = new DefaultPluralizedMessage(new DefaultMessage('test'), 1.5);
         $message = $translator->translate($message, ['a' => 'b'], 'domain');
 
-        $this->assertEquals('test', $message->getKey());
-        $this->assertEquals('test', $message->getTranslation());
-        $this->assertEquals(['a' => 'b'], $message->getParameters());
-        $this->assertEquals('domain', $message->getDomain());
-        $this->assertEquals(1.5, $message->getQuantity());
+        self::assertEquals('test', $message->getKey());
+        self::assertEquals('test', $message->getTranslation());
+        self::assertEquals(['a' => 'b'], $message->getParameters());
+        self::assertEquals('domain', $message->getDomain());
+        self::assertEquals(1.5, $message->getQuantity());
     }
 
     public function test_pluralizes_strings(): void
@@ -57,8 +57,8 @@ class DefaultTranslatorTest extends TestCase
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $message = $translator->pluralize('test', 1.5);
 
-        $this->assertEquals('test', $message->getKey());
-        $this->assertEquals(1.5, $message->getQuantity());
+        self::assertEquals('test', $message->getKey());
+        self::assertEquals(1.5, $message->getQuantity());
     }
 
     public function test_pluralizes_messages(): void
@@ -67,9 +67,9 @@ class DefaultTranslatorTest extends TestCase
         $message = new DefaultParameterizedMessage(new DefaultMessage('test', 'domain'), ['a' => 'b']);
         $message = $translator->pluralize($message, 1.5);
 
-        $this->assertEquals('test', $message->getKey());
-        $this->assertEquals(1.5, $message->getQuantity());
-        $this->assertEquals('domain', $message->getDomain());
+        self::assertEquals('test', $message->getKey());
+        self::assertEquals(1.5, $message->getQuantity());
+        self::assertEquals('domain', $message->getDomain());
     }
 
     public function test_uses_default_locale(): void
@@ -77,18 +77,18 @@ class DefaultTranslatorTest extends TestCase
         $translator = new DefaultTranslator();
         $message = $translator->translate('test');
 
-        $this->assertInstanceOf(Locale::class, $message->getLocale());
+        self::assertInstanceOf(Locale::class, $message->getLocale());
     }
 
     public function test_returns_instance_with_new_locale(): void
     {
         $translator = new DefaultTranslator(DefaultLocale::fromString('de-DE'));
         $sameTranslator = $translator->withLocale(DefaultLocale::fromString('de-DE'));
-        $this->assertEquals($translator, $sameTranslator);
+        self::assertEquals($translator, $sameTranslator);
 
         $translator = $translator->withLocale(DefaultLocale::fromString('en-US'));
         $message = $translator->translate('test');
 
-        $this->assertEquals('en-US', $message->getLocale()->getCode());
+        self::assertEquals('en-US', $message->getLocale()->getCode());
     }
 }

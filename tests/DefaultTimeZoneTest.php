@@ -12,22 +12,22 @@ class DefaultTimeZoneTest extends TestCase
     public function test_getters(): void
     {
         $timeZone = new DefaultTimeZone('Europe/Berlin');
-        $this->assertEquals('Europe/Berlin', $timeZone->getName());
+        self::assertEquals('Europe/Berlin', $timeZone->getName());
     }
 
     public function test_reads_default_time_zone(): void
     {
         $currentTimeZone = date_default_timezone_get();
         $timeZone = new DefaultTimeZone();
-        $this->assertEquals($currentTimeZone, $timeZone->getName());
+        self::assertEquals($currentTimeZone, $timeZone->getName());
 
         date_default_timezone_set('Europe/Berlin');
         $timeZone = new DefaultTimeZone();
-        $this->assertEquals('Europe/Berlin', $timeZone->getName());
+        self::assertEquals('Europe/Berlin', $timeZone->getName());
 
         date_default_timezone_set('America/New_York');
         $timeZone = new DefaultTimeZone();
-        $this->assertEquals('America/New_York', $timeZone->getName());
+        self::assertEquals('America/New_York', $timeZone->getName());
 
         date_default_timezone_set($currentTimeZone);
     }

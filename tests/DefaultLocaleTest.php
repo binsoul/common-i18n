@@ -34,7 +34,7 @@ class DefaultLocaleTest extends TestCase
      */
     public function test_parses_valid_codes($code): void
     {
-        $this->assertEquals($code, DefaultLocale::fromString($code)->getCode());
+        self::assertEquals($code, DefaultLocale::fromString($code)->getCode());
     }
 
     public function invalidLocales()
@@ -61,70 +61,70 @@ class DefaultLocaleTest extends TestCase
     public function test_uses_separator(): void
     {
         $locale = DefaultLocale::fromString('de_DE_x_foobar', '_');
-        $this->assertEquals('de_DE_x_foobar', $locale->getCode('_'));
-        $this->assertEquals('de/DE/x/foobar', $locale->getCode('/'));
+        self::assertEquals('de_DE_x_foobar', $locale->getCode('_'));
+        self::assertEquals('de/DE/x/foobar', $locale->getCode('/'));
 
         $locale = DefaultLocale::fromString('de-DE-x-foobar', '-');
-        $this->assertEquals('de_DE_x_foobar', $locale->getCode('_'));
-        $this->assertEquals('de/DE/x/foobar', $locale->getCode('/'));
+        self::assertEquals('de_DE_x_foobar', $locale->getCode('_'));
+        self::assertEquals('de/DE/x/foobar', $locale->getCode('/'));
     }
 
     public function test_detects_unexpected_separator(): void
     {
-        $this->assertEquals('x-de', DefaultLocale::fromString('x_de')->getCode());
-        $this->assertEquals('de-DE', DefaultLocale::fromString('de_DE')->getCode());
-        $this->assertEquals('de-CH-POSIX', DefaultLocale::fromString('de_CH_POSIX')->getCode());
+        self::assertEquals('x-de', DefaultLocale::fromString('x_de')->getCode());
+        self::assertEquals('de-DE', DefaultLocale::fromString('de_DE')->getCode());
+        self::assertEquals('de-CH-POSIX', DefaultLocale::fromString('de_CH_POSIX')->getCode());
 
-        $this->assertEquals('x-de', DefaultLocale::fromString('x/de')->getCode());
-        $this->assertEquals('de-DE', DefaultLocale::fromString('de/DE')->getCode());
-        $this->assertEquals('de-CH-POSIX', DefaultLocale::fromString('de/CH/POSIX')->getCode());
+        self::assertEquals('x-de', DefaultLocale::fromString('x/de')->getCode());
+        self::assertEquals('de-DE', DefaultLocale::fromString('de/DE')->getCode());
+        self::assertEquals('de-CH-POSIX', DefaultLocale::fromString('de/CH/POSIX')->getCode());
     }
 
     public function test_getters(): void
     {
         $locale = DefaultLocale::fromString('x-he-Latn-IL-POSIX-u-ca-hebrew-tz-jeruslm-x-abc-def@foo=bar');
-        $this->assertEquals('x', $locale->getPrefix());
-        $this->assertEquals('he', $locale->getLanguage());
-        $this->assertEquals('Latn', $locale->getScript());
-        $this->assertEquals('IL', $locale->getRegion());
-        $this->assertEquals(['POSIX'], $locale->getVariants());
-        $this->assertEquals(['u' => ['ca', 'hebrew', 'tz', 'jeruslm']], $locale->getExtensions());
-        $this->assertEquals(['abc', 'def'], $locale->getPrivate());
-        $this->assertEquals(['foo' => 'bar'], $locale->getModifiers());
+        self::assertEquals('x', $locale->getPrefix());
+        self::assertEquals('he', $locale->getLanguage());
+        self::assertEquals('Latn', $locale->getScript());
+        self::assertEquals('IL', $locale->getRegion());
+        self::assertEquals(['POSIX'], $locale->getVariants());
+        self::assertEquals(['u' => ['ca', 'hebrew', 'tz', 'jeruslm']], $locale->getExtensions());
+        self::assertEquals(['abc', 'def'], $locale->getPrivate());
+        self::assertEquals(['foo' => 'bar'], $locale->getModifiers());
     }
 
     public function test_get_parent(): void
     {
         $locale = DefaultLocale::fromString('x-de-Latn-CH-POSIX-u-ca-hebrew-x-abc@foo=bar');
         $locale = $locale->getParent();
-        $this->assertEquals('x-de-Latn-CH-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
+        self::assertEquals('x-de-Latn-CH-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
         $locale = $locale->getParent();
-        $this->assertEquals('x-de-Latn-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
+        self::assertEquals('x-de-Latn-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
         $locale = $locale->getParent();
-        $this->assertEquals('x-de-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
+        self::assertEquals('x-de-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
         $locale = $locale->getParent();
-        $this->assertEquals('x-root-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
+        self::assertEquals('x-root-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());
     }
 
     public function test_is_neutral(): void
     {
-        $this->assertTrue(DefaultLocale::fromString('de')->isNeutral());
-        $this->assertTrue(DefaultLocale::fromString('de-u-tz-berlin')->isNeutral());
-        $this->assertTrue(DefaultLocale::fromString('de@collation=phonebook')->isNeutral());
+        self::assertTrue(DefaultLocale::fromString('de')->isNeutral());
+        self::assertTrue(DefaultLocale::fromString('de-u-tz-berlin')->isNeutral());
+        self::assertTrue(DefaultLocale::fromString('de@collation=phonebook')->isNeutral());
 
-        $this->assertFalse(DefaultLocale::fromString('x-de')->isNeutral());
-        $this->assertFalse(DefaultLocale::fromString('de-DE')->isNeutral());
-        $this->assertFalse(DefaultLocale::fromString('de-Latn')->isNeutral());
-        $this->assertFalse(DefaultLocale::fromString('de-CH-POSIX')->isNeutral());
+        self::assertFalse(DefaultLocale::fromString('x-de')->isNeutral());
+        self::assertFalse(DefaultLocale::fromString('de-DE')->isNeutral());
+        self::assertFalse(DefaultLocale::fromString('de-Latn')->isNeutral());
+        self::assertFalse(DefaultLocale::fromString('de-CH-POSIX')->isNeutral());
     }
 
     public function test_is_root(): void
     {
-        $this->assertTrue(DefaultLocale::fromString('')->isRoot());
-        $this->assertTrue(DefaultLocale::fromString('root')->isRoot());
+        self::assertTrue(DefaultLocale::fromString('')->isRoot());
+        self::assertTrue(DefaultLocale::fromString('root')->isRoot());
 
-        $this->assertFalse(DefaultLocale::fromString('de')->isRoot());
-        $this->assertFalse(DefaultLocale::fromString('de-DE')->isRoot());
-        $this->assertFalse(DefaultLocale::fromString('x-root')->isRoot());
+        self::assertFalse(DefaultLocale::fromString('de')->isRoot());
+        self::assertFalse(DefaultLocale::fromString('de-DE')->isRoot());
+        self::assertFalse(DefaultLocale::fromString('x-root')->isRoot());
     }
 }
