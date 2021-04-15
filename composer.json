@@ -19,10 +19,10 @@
         "php": "^7.3 || ^8.0"
     },
     "require-dev": {
-        "binsoul/coding-standard": "*@dev",
+        "binsoul/coding-standard": "^1",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^8",
-        "symplify/easy-coding-standard-prefixed": "^7"
+        "symplify/easy-coding-standard-prefixed": "^9"
     },
     "autoload": {
         "psr-4": {
