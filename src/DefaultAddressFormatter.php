@@ -259,11 +259,12 @@ class DefaultAddressFormatter implements AddressFormatter
         $tokens['%R'] = $this->isoCodeToName(strtoupper((string) $address->getCountryCode()));
         $tokens['%X'] = $address->getSortingCode();
         $tokens['%D'] = $address->getDependentLocality();
-        $tokens['%n'] = "\n";
 
         foreach ($tokens as $key => $value) {
-            $tokens[$key] = (string) $value;
+            $tokens[$key] = trim((string) $value);
         }
+
+        $tokens['%n'] = "\n";
 
         $upperCase = $addressFormat[2] ?? self::$defaultFormat[2];
 
@@ -275,6 +276,7 @@ class DefaultAddressFormatter implements AddressFormatter
         $result = str_replace(array_keys($tokens), array_values($tokens), $format);
         $result = preg_replace('/\n+/', "\n", $result) ?? $result;
         $result = preg_replace('/ +/', ' ', $result) ?? $result;
+        $result = preg_replace('/ \n/', '', $result) ?? $result;
         $result = trim($result);
 
         return $result;
