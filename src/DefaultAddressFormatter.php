@@ -268,11 +268,11 @@ class DefaultAddressFormatter implements AddressFormatter
         $tokens['%A'] = implode("\n", [(string) $address->getAddressLine1(), (string) $address->getAddressLine2(), (string) $address->getAddressLine3()]);
         $tokens['%N'] = implode(' ', [(string) $address->getNamePrefix(), (string) $address->getFirstName(), (string) $address->getLastName()]);
         $tokens['%C'] = $address->getLocality();
-        $tokens['%S'] = $address->getAdminArea();
+        $tokens['%S'] = $address->getState();
         $tokens['%Z'] = $address->getPostalCode();
         $tokens['%R'] = $this->isoCodeToName(strtoupper((string) $address->getCountryCode()));
         $tokens['%X'] = $address->getSortingCode();
-        $tokens['%D'] = $address->getDependentLocality();
+        $tokens['%D'] = $address->getSubLocality();
 
         foreach ($tokens as $key => $value) {
             $tokens[$key] = trim((string) $value);

@@ -60,14 +60,14 @@ interface Address
     public function getLocality(): ?string;
 
     /**
-     * Returns the dependent locality.
+     * Returns the sub locality.
      */
-    public function getDependentLocality(): ?string;
+    public function getSubLocality(): ?string;
 
     /**
-     * Returns the admin area / state.
+     * Returns the state.
      */
-    public function getAdminArea(): ?string;
+    public function getState(): ?string;
 
     /**
      * Returns the iso2 code of the country.

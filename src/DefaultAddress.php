@@ -62,12 +62,12 @@ class DefaultAddress implements Address
     /**
      * @var string|null
      */
-    private $dependentLocality;
+    private $subLocality;
 
     /**
      * @var string|null
      */
-    private $adminArea;
+    private $state;
 
     /**
      * @var string|null
@@ -88,8 +88,8 @@ class DefaultAddress implements Address
         ?string $sortingCode = null,
         ?string $postalCode = null,
         ?string $locality = null,
-        ?string $dependentLocality = null,
-        ?string $adminArea = null,
+        ?string $subLocality = null,
+        ?string $state = null,
         ?string $countryCode = null
     ) {
         $this->organization = $organization;
@@ -102,8 +102,8 @@ class DefaultAddress implements Address
         $this->sortingCode = $sortingCode;
         $this->postalCode = $postalCode;
         $this->locality = $locality;
-        $this->dependentLocality = $dependentLocality;
-        $this->adminArea = $adminArea;
+        $this->subLocality = $subLocality;
+        $this->state = $state;
         $this->countryCode = $countryCode;
     }
 
@@ -207,24 +207,24 @@ class DefaultAddress implements Address
         $this->locality = $locality;
     }
 
-    public function getDependentLocality(): ?string
+    public function getSubLocality(): ?string
     {
-        return $this->dependentLocality;
+        return $this->subLocality;
     }
 
-    public function setDependentLocality(?string $dependentLocality): void
+    public function setSubLocality(?string $subLocality): void
     {
-        $this->dependentLocality = $dependentLocality;
+        $this->subLocality = $subLocality;
     }
 
-    public function getAdminArea(): ?string
+    public function getState(): ?string
     {
-        return $this->adminArea;
+        return $this->state;
     }
 
-    public function setAdminArea(?string $adminArea): void
+    public function setState(?string $state): void
     {
-        $this->adminArea = $adminArea;
+        $this->state = $state;
     }
 
     public function getCountryCode(): ?string
