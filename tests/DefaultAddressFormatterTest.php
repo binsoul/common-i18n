@@ -65,14 +65,37 @@ class DefaultAddressFormatterTest extends TestCase
         self::assertEquals("Mr. firstName lastName\naddressLine1\naddressLine2\naddressLine3\n12345 City\nDE", $addressFormatter->format($address));
     }
 
+    public function test_uppercases_parts(): void
+    {
+        $address = new DefaultAddress(
+            'Organisation',
+            null,
+            null,
+            null,
+            'addressLine1',
+            'addressLine2',
+            'addressLine3',
+            null,
+            '12345',
+            'City',
+            null,
+            'State',
+            'FR'
+        );
+
+        $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
+
+        self::assertEquals("Organisation\naddressLine1\naddressLine2\naddressLine3\n12345 CITY\nFR", $addressFormatter->format($address));
+    }
+
     public function test_generates_templates(): void
     {
         $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
 
         $address = $addressFormatter->generateTemplate('de');
-        self::assertEquals("optional\noptional optional optional\nrequired\noptional\noptional\nrequired required\nDE", $addressFormatter->format($address));
+        self::assertEquals("optional optional optional\noptional\nrequired\noptional\noptional\nrequired required\nDE", $addressFormatter->format($address));
 
         $address = $addressFormatter->generateTemplate('ae');
-        self::assertEquals("optional\noptional optional optional\nrequired\noptional\noptional\nrequired\nAE", $addressFormatter->format($address));
+        self::assertEquals("optional optional optional\noptional\nrequired\noptional\noptional\nrequired\nAE", $addressFormatter->format($address));
     }
 }
