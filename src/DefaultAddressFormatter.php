@@ -237,7 +237,7 @@ class DefaultAddressFormatter implements AddressFormatter
 
     public function format(Address $address): string
     {
-        $addressFormat = self::$formats[strtoupper((string) $address->getCountryCode())] ?? self::$defaultFormat;
+        $addressFormat = self::$formats[strtoupper(trim((string) $address->getCountryCode()))] ?? self::$defaultFormat;
 
         $format = $addressFormat[0] ?? self::$defaultFormat[0];
 
@@ -268,7 +268,7 @@ class DefaultAddressFormatter implements AddressFormatter
 
         $upperCase = $addressFormat[2] ?? self::$defaultFormat[2];
 
-        for ($i = 0, $iMax = \strlen($upperCase); $i < $iMax; $i++) {
+        for ($i = 0, $iMax = strlen($upperCase); $i < $iMax; $i++) {
             $char = $upperCase[$i];
             $tokens['%' . $char] = mb_strtoupper($tokens['%' . $char] ?? '');
         }
@@ -278,6 +278,71 @@ class DefaultAddressFormatter implements AddressFormatter
         $result = preg_replace('/ +/', ' ', $result) ?? $result;
         $result = preg_replace('/ \n/', '', $result) ?? $result;
         $result = trim($result);
+
+        return $result;
+    }
+
+    public function generateTemplate(string $countryCode): Address
+    {
+        $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
+
+        $format = $addressFormat[0] ?? self::$defaultFormat[0];
+
+        if (! strpos($format, '%R')) {
+            $format .= '%n%R';
+        }
+
+        $mapping = [
+            'organization' => '%O',
+            'namePrefix' => '%P',
+            'firstName' => '%F',
+            'lastName' => '%L',
+            'addressLine1' => '%A',
+            'addressLine2' => '%A',
+            'addressLine3' => '%A',
+            'sortingCode' => '%X',
+            'postalCode' => '%Z',
+            'locality' => '%C',
+            'dependentLocality' => '%D',
+            'adminArea' => '%S',
+            'countryCode' => '%R',
+        ];
+
+        $data = $mapping;
+
+        foreach (array_keys($this->tokens) as $token) {
+            if (strpos($format, $token) !== false) {
+                foreach ($mapping as $argument => $mappedData) {
+                    if ($mappedData === $token) {
+                        $data[$argument] = 'optional';
+                    }
+                }
+            }
+        }
+
+        $required = $addressFormat[1] ?? self::$defaultFormat[1];
+        $requiredTokens = str_split($required);
+
+        if (! in_array('R', $requiredTokens, true)) {
+            $requiredTokens[] = 'R';
+        }
+
+        foreach ($requiredTokens as $token) {
+            foreach ($mapping as $argument => $mappedData) {
+                if ($mappedData === '%' . $token && $argument !== 'addressLine2' && $argument !== 'addressLine3') {
+                    $data[$argument] = 'required';
+                }
+            }
+        }
+
+        foreach ($data as $argument => $mappedData) {
+            if ($mappedData !== 'optional' && $mappedData !== 'required') {
+                $data[$argument] = null;
+            }
+        }
+
+        $result = new DefaultAddress(...array_values($data));
+        $result->setCountryCode(strtoupper(trim($countryCode)));
 
         return $result;
     }
