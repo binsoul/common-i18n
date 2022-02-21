@@ -369,19 +369,19 @@ class DefaultAddressFormatter implements AddressFormatter
         $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
 
         $data = [
-            'organization' => 'organization',
-            'namePrefix' => 'name_prefix',
-            'firstName' => 'first_name',
-            'lastName' => 'last_name',
-            'addressLine1' => 'address_line_1',
-            'addressLine2' => 'address_line_2',
-            'addressLine3' => 'address_line_3',
-            'sortingCode' => 'sorting_code',
-            'postalCode' => $addressFormat[6] ?? 'postal_code',
-            'locality' => $addressFormat[3] ?? 'locality',
-            'subLocality' => $addressFormat[4] ?? 'sub_locality',
-            'state' => $addressFormat[5] ?? 'state',
-            'countryCode' => 'country_code',
+            'organization' => null,
+            'namePrefix' => null,
+            'firstName' => null,
+            'lastName' => null,
+            'addressLine1' => null,
+            'addressLine2' => null,
+            'addressLine3' => null,
+            'sortingCode' => null,
+            'postalCode' => $addressFormat[6],
+            'locality' => $addressFormat[3],
+            'subLocality' => $addressFormat[4],
+            'state' => $addressFormat[5],
+            'countryCode' => null,
         ];
 
         return new DefaultAddress(...array_values($data));
