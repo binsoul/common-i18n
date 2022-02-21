@@ -36,7 +36,7 @@ class DefaultAddressFormatter implements AddressFormatter
         'AS' => ['%N%n%O%n%A%n%C %S %Z', 'ACSZ', 'ACNOS', null, null, 'state', 'zip', '(96799)(?:[ \-](\d{4}))?'],
         'AT' => ['%O%n%N%n%A%n%Z %C', 'ACZ', null, null, null, null, null, '\d{4}'],
         'AU' => ['%O%n%N%n%A%n%C %S %Z', 'ACSZ', 'CS', 'suburb', null, 'state', null, '\d{4}'],
-        'AX' => ['%O%n%N%n%A%nAX-%Z %C%n├àLAND', 'ACZ', null, null, null, null, null, '22\d{3}'],
+        'AX' => ['%O%n%N%n%A%nAX-%Z %C%nÅLAND', 'ACZ', null, null, null, null, null, '22\d{3}'],
         'AZ' => ['%N%n%O%n%A%nAZ %Z %C', null, null, null, null, null, null, '\d{4}'],
         'BA' => ['%N%n%O%n%A%n%Z %C', null, null, null, null, null, null, '\d{5}'],
         'BB' => ['%N%n%O%n%A%n%C, %S %Z', null, null, null, null, 'parish', null, 'BB\d{5}'],
@@ -338,6 +338,10 @@ class DefaultAddressFormatter implements AddressFormatter
 
         if (! in_array('R', $requiredTokens, true)) {
             $requiredTokens[] = 'R';
+        }
+
+        if (strpos($format, '%Z') !== false) {
+            $requiredTokens[] = 'Z';
         }
 
         foreach ($requiredTokens as $token) {
