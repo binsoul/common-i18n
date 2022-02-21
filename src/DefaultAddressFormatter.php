@@ -227,7 +227,7 @@ class DefaultAddressFormatter implements AddressFormatter
     /**
      * @var string[]
      */
-    private static $defaultFormat = ['%N%n%O%n%A%n%C', 'AC', 'C'];
+    private static $defaultFormat = ['%N%n%O%n%A%n%C', 'AC', 'C', null, null, null, null, null];
 
     /**
      * @var string[]
@@ -296,10 +296,9 @@ class DefaultAddressFormatter implements AddressFormatter
         return $result;
     }
 
-    public function generateTemplate(string $countryCode): Address
+    public function generateUsageTemplate(string $countryCode): Address
     {
         $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
-
         $format = $addressFormat[0] ?? self::$defaultFormat[0];
 
         if (! strpos($format, '%R')) {
@@ -317,8 +316,8 @@ class DefaultAddressFormatter implements AddressFormatter
             'sortingCode' => '%X',
             'postalCode' => '%Z',
             'locality' => '%C',
-            'dependentLocality' => '%D',
-            'adminArea' => '%S',
+            'subLocality' => '%D',
+            'state' => '%S',
             'countryCode' => '%R',
         ];
 
@@ -359,6 +358,52 @@ class DefaultAddressFormatter implements AddressFormatter
         $result->setCountryCode(strtoupper(trim($countryCode)));
 
         return $result;
+    }
+
+    public function generateLabelTemplate(string $countryCode): Address
+    {
+        $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
+
+        $data = [
+            'organization' => 'organization',
+            'namePrefix' => 'name_prefix',
+            'firstName' => 'first_name',
+            'lastName' => 'last_name',
+            'addressLine1' => 'address_line_1',
+            'addressLine2' => 'address_line_2',
+            'addressLine3' => 'address_line_3',
+            'sortingCode' => 'sorting_code',
+            'postalCode' => $addressFormat[6] ?? 'postal_code',
+            'locality' => $addressFormat[3] ?? 'locality',
+            'subLocality' => $addressFormat[4] ?? 'sub_locality',
+            'state' => $addressFormat[5] ?? 'state',
+            'countryCode' => 'country_code',
+        ];
+
+        return new DefaultAddress(...array_values($data));
+    }
+
+    public function generateRegexTemplate(string $countryCode): Address
+    {
+        $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
+
+        $data = [
+            'organization' => null,
+            'namePrefix' => null,
+            'firstName' => null,
+            'lastName' => null,
+            'addressLine1' => null,
+            'addressLine2' => null,
+            'addressLine3' => null,
+            'sortingCode' => null,
+            'postalCode' => $addressFormat[7],
+            'locality' => null,
+            'subLocality' => null,
+            'state' => null,
+            'countryCode' => null,
+        ];
+
+        return new DefaultAddress(...array_values($data));
     }
 
     public function withLocale(Locale $locale): AddressFormatter

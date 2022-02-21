@@ -17,7 +17,17 @@ interface AddressFormatter
     /**
      * Returns an address where all fields contain either "required", "optional" or null if not needed.
      */
-    public function generateTemplate(string $countryCode): Address;
+    public function generateUsageTemplate(string $countryCode): Address;
+
+    /**
+     * Returns an address where all fields contain a label code.
+     */
+    public function generateLabelTemplate(string $countryCode): Address;
+
+    /**
+     * Returns an address where all fields contain either a regular expression or null if no special format is required.
+     */
+    public function generateRegexTemplate(string $countryCode): Address;
 
     /**
      * Returns a new instance with the given locale.

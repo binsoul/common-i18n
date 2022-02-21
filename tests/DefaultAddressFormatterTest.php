@@ -88,14 +88,36 @@ class DefaultAddressFormatterTest extends TestCase
         self::assertEquals("Organisation\naddressLine1\naddressLine2\naddressLine3\n12345 CITY\nFR", $addressFormatter->format($address));
     }
 
-    public function test_generates_templates(): void
+    public function test_generates_usage_templates(): void
     {
         $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
 
-        $address = $addressFormatter->generateTemplate('de');
+        $address = $addressFormatter->generateUsageTemplate('de');
         self::assertEquals("optional optional optional\noptional\nrequired\noptional\noptional\nrequired required\nDE", $addressFormatter->format($address));
 
-        $address = $addressFormatter->generateTemplate('ae');
+        $address = $addressFormatter->generateUsageTemplate('ae');
         self::assertEquals("optional optional optional\noptional\nrequired\noptional\noptional\nrequired\nAE", $addressFormatter->format($address));
+    }
+
+    public function test_generates_label_templates(): void
+    {
+        $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
+
+        $address = $addressFormatter->generateLabelTemplate('de');
+        self::assertEquals('state', $address->getState());
+
+        $address = $addressFormatter->generateLabelTemplate('ae');
+        self::assertEquals('emirate', $address->getState());
+    }
+
+    public function test_generates_regex_templates(): void
+    {
+        $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
+
+        $address = $addressFormatter->generateRegexTemplate('de');
+        self::assertEquals('\d{5}', $address->getPostalCode());
+
+        $address = $addressFormatter->generateRegexTemplate('ae');
+        self::assertNull($address->getPostalCode());
     }
 }
