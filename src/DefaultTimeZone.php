@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace  BinSoul\Common\I18n;
+namespace BinSoul\Common\I18n;
 
 /**
  * Provides a default implementation of the {@see TimeZone} interface.
