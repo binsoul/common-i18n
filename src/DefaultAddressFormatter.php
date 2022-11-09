@@ -412,6 +412,81 @@ class DefaultAddressFormatter implements AddressFormatter
         return new DefaultAddress(...array_values($data));
     }
 
+    public function generateLayoutTemplate(string $countryCode): Address
+    {
+        $mapping = [
+            'organization' => '%O',
+            'namePrefix' => '%N',
+            'firstName' => '%N',
+            'lastName' => '%N',
+            'addressLine1' => '%A',
+            'addressLine2' => '%A',
+            'addressLine3' => '%A',
+            'sortingCode' => '%X',
+            'postalCode' => '%Z',
+            'locality' => '%C',
+            'subLocality' => '%D',
+            'state' => '%S',
+            'countryCode' => '%R',
+        ];
+
+        $data = array_fill_keys(array_keys($mapping), null);
+
+        $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
+        $format = $addressFormat[0] ?? self::$defaultFormat[0];
+
+        if (! strpos($format, '%R')) {
+            $format .= '%n%R';
+        }
+
+        $lines = explode('%n', $format);
+        $row = 1;
+
+        foreach ($lines as $line) {
+            $column = 1;
+            $fields = $line;
+
+            while ($fields !== '') {
+                foreach (array_keys($this->tokens) as $token) {
+                    if (strpos($fields, $token) !== 0) {
+                        continue;
+                    }
+
+                    foreach ($mapping as $argument => $mappedData) {
+                        if ($mappedData === $token) {
+                            $data[$argument] = $row . ',' . $column;
+
+                            if ($token === '%A') {
+                                $row++;
+                            } elseif ($token === '%N') {
+                                $column++;
+                            }
+                        }
+                    }
+
+                    if ($token === '%A') {
+                        $row--;
+                    } elseif ($token === '%N') {
+                        $column--;
+                    }
+
+                    $column++;
+                    $fields = substr($fields, strlen($token));
+
+                    while ($fields !== '' && $fields[0] !== '%') {
+                        $fields = substr($fields, 1);
+                    }
+
+                    break;
+                }
+            }
+
+            $row++;
+        }
+
+        return new DefaultAddress(...array_values($data));
+    }
+
     public function withLocale(Locale $locale): AddressFormatter
     {
         if ($locale->getCode() === $this->locale->getCode()) {

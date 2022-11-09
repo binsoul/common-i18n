@@ -120,4 +120,19 @@ class DefaultAddressFormatterTest extends TestCase
         $address = $addressFormatter->generateRegexTemplate('ae');
         self::assertNull($address->getPostalCode());
     }
+
+    public function test_generates_layout_templates(): void
+    {
+        $addressFormatter = new DefaultAddressFormatter(DefaultLocale::fromString('de-DE'));
+
+        $address = $addressFormatter->generateLayoutTemplate('de');
+        self::assertEquals('6,1', $address->getPostalCode());
+        self::assertEquals('6,2', $address->getLocality());
+        self::assertNull($address->getState());
+
+        $address = $addressFormatter->generateLayoutTemplate('ae');
+        self::assertNull($address->getPostalCode());
+        self::assertNull($address->getLocality());
+        self::assertEquals('6,1', $address->getState());
+    }
 }
