@@ -447,6 +447,10 @@ class DefaultAddressFormatter implements AddressFormatter
             $fields = $line;
 
             while ($fields !== '') {
+                while ($fields !== '' && $fields[0] !== '%') {
+                    $fields = substr($fields, 1);
+                }
+
                 foreach (array_keys($this->tokens) as $token) {
                     if (strpos($fields, $token) !== 0) {
                         continue;
@@ -472,10 +476,6 @@ class DefaultAddressFormatter implements AddressFormatter
 
                     $column++;
                     $fields = substr($fields, strlen($token));
-
-                    while ($fields !== '' && $fields[0] !== '%') {
-                        $fields = substr($fields, 1);
-                    }
 
                     break;
                 }

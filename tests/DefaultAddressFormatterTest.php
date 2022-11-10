@@ -134,5 +134,10 @@ class DefaultAddressFormatterTest extends TestCase
         self::assertNull($address->getPostalCode());
         self::assertNull($address->getLocality());
         self::assertEquals('6,1', $address->getState());
+
+        $address = $addressFormatter->generateLayoutTemplate('ch');
+        self::assertEquals('6,1', $address->getPostalCode());
+        self::assertEquals('6,2', $address->getLocality());
+        self::assertNull($address->getState());
     }
 }
