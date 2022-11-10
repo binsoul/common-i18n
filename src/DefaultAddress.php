@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BinSoul\Common\I18n;
 
 /**
- * Provides a default implementation of the {@see Address} interface.
+ * Provides a default implementation of the {@see MutableAddress} interface.
  */
-class DefaultAddress implements Address
+class DefaultAddress implements MutableAddress
 {
     /**
      * @var string|null
@@ -112,9 +112,9 @@ class DefaultAddress implements Address
         return $this->organization;
     }
 
-    public function setOrganization(?string $organization): void
+    public function setOrganization(?string $value): void
     {
-        $this->organization = $organization;
+        $this->organization = $value;
     }
 
     public function getNamePrefix(): ?string
@@ -122,9 +122,9 @@ class DefaultAddress implements Address
         return $this->namePrefix;
     }
 
-    public function setNamePrefix(?string $namePrefix): void
+    public function setNamePrefix(?string $value): void
     {
-        $this->namePrefix = $namePrefix;
+        $this->namePrefix = $value;
     }
 
     public function getFirstName(): ?string
@@ -132,9 +132,9 @@ class DefaultAddress implements Address
         return $this->firstName;
     }
 
-    public function setFirstName(?string $firstName): void
+    public function setFirstName(?string $value): void
     {
-        $this->firstName = $firstName;
+        $this->firstName = $value;
     }
 
     public function getLastName(): ?string
@@ -142,9 +142,9 @@ class DefaultAddress implements Address
         return $this->lastName;
     }
 
-    public function setLastName(?string $lastName): void
+    public function setLastName(?string $value): void
     {
-        $this->lastName = $lastName;
+        $this->lastName = $value;
     }
 
     public function getAddressLine1(): ?string
@@ -152,9 +152,9 @@ class DefaultAddress implements Address
         return $this->addressLine1;
     }
 
-    public function setAddressLine1(?string $addressLine1): void
+    public function setAddressLine1(?string $value): void
     {
-        $this->addressLine1 = $addressLine1;
+        $this->addressLine1 = $value;
     }
 
     public function getAddressLine2(): ?string
@@ -162,9 +162,9 @@ class DefaultAddress implements Address
         return $this->addressLine2;
     }
 
-    public function setAddressLine2(?string $addressLine2): void
+    public function setAddressLine2(?string $value): void
     {
-        $this->addressLine2 = $addressLine2;
+        $this->addressLine2 = $value;
     }
 
     public function getAddressLine3(): ?string
@@ -172,9 +172,9 @@ class DefaultAddress implements Address
         return $this->addressLine3;
     }
 
-    public function setAddressLine3(?string $addressLine3): void
+    public function setAddressLine3(?string $value): void
     {
-        $this->addressLine3 = $addressLine3;
+        $this->addressLine3 = $value;
     }
 
     public function getSortingCode(): ?string
@@ -182,9 +182,9 @@ class DefaultAddress implements Address
         return $this->sortingCode;
     }
 
-    public function setSortingCode(?string $sortingCode): void
+    public function setSortingCode(?string $value): void
     {
-        $this->sortingCode = $sortingCode;
+        $this->sortingCode = $value;
     }
 
     public function getPostalCode(): ?string
@@ -192,9 +192,9 @@ class DefaultAddress implements Address
         return $this->postalCode;
     }
 
-    public function setPostalCode(?string $postalCode): void
+    public function setPostalCode(?string $value): void
     {
-        $this->postalCode = $postalCode;
+        $this->postalCode = $value;
     }
 
     public function getLocality(): ?string
@@ -202,9 +202,9 @@ class DefaultAddress implements Address
         return $this->locality;
     }
 
-    public function setLocality(?string $locality): void
+    public function setLocality(?string $value): void
     {
-        $this->locality = $locality;
+        $this->locality = $value;
     }
 
     public function getSubLocality(): ?string
@@ -212,9 +212,9 @@ class DefaultAddress implements Address
         return $this->subLocality;
     }
 
-    public function setSubLocality(?string $subLocality): void
+    public function setSubLocality(?string $value): void
     {
-        $this->subLocality = $subLocality;
+        $this->subLocality = $value;
     }
 
     public function getState(): ?string
@@ -222,9 +222,9 @@ class DefaultAddress implements Address
         return $this->state;
     }
 
-    public function setState(?string $state): void
+    public function setState(?string $value): void
     {
-        $this->state = $state;
+        $this->state = $value;
     }
 
     public function getCountryCode(): ?string
@@ -232,8 +232,8 @@ class DefaultAddress implements Address
         return $this->countryCode;
     }
 
-    public function setCountryCode(?string $countryCode): void
+    public function setCountryCode(?string $value): void
     {
-        $this->countryCode = $countryCode;
+        $this->countryCode = $value;
     }
 }
