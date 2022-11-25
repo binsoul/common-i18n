@@ -54,7 +54,7 @@ class DefaultAddressFormatter implements AddressFormatter
         'BS' => ['%N%n%O%n%A%n%C, %S', null, null, null, null, null, null],
         'BT' => ['%N%n%O%n%A%n%C %Z', null, null, null, null, null, '\d{5}'],
         'BY' => ['%O%n%N%n%A%n%Z, %C%n%S', null, null, null, null, null, '\d{6}'],
-        'CA' => ['%N%n%O%n%A%n%C %S %Z', 'ACSZ', 'ACNOSZ', null, null, null, '[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z] ?\d[ABCEGHJ-NPRSTV-Z]\d'],
+        'CA' => ['%N%n%O%n%A%n%C %S %Z', 'ACSZ', 'ACNOSZ', null, null, null, '[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z] ?((\d[ABCEGHJ-NPRSTV-Z]\d)|$)'],
         'CC' => ['%O%n%N%n%A%n%C %S %Z', null, 'CS', null, null, null, '6799'],
         'CH' => ['%O%n%N%n%A%nCH-%Z %C', 'ACZ', null, null, null, null, '\d{4}'],
         'CI' => ['%N%n%O%n%X %A %C %X', null, null, null, null, null, null],
