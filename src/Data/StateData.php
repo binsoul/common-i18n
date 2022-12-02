@@ -11,6 +11,7 @@ class StateData
 {
     /**
      * @see https://en.wikipedia.org/wiki/List_of_administrative_divisions_by_country
+     * @see https://www.iso.org/obp/ui/#iso:code:3166:XX
      */
     private const STATES = [
         'AC' => [
@@ -66,16 +67,17 @@ class StateData
         'AT' => [
             'type' => 'state',
             'names' => [
-                'Burgenland',
-                'Kärnten',
-                'Niederösterreich',
-                'Oberösterreich',
-                'Salzburg',
-                'Steiermark',
-                'Tirol',
-                'Vorarlberg',
-                'Wien',
+                '1' => 'Burgenland',
+                '2' => 'Kärnten',
+                '3' => 'Niederösterreich',
+                '4' => 'Oberösterreich',
+                '5' => 'Salzburg',
+                '6' => 'Steiermark',
+                '7' => 'Tirol',
+                '8' => 'Vorarlberg',
+                '9' => 'Wien',
             ],
+            'useCode' => false,
         ],
         'AU' => [
             'type' => 'state',
@@ -221,49 +223,51 @@ class StateData
         'CA' => [
             'type' => 'province',
             'names' => [
-                'Alberta',
-                'British Columbia',
-                'Manitoba',
-                'New Brunswick',
-                'Newfoundland and Labrador',
-                'Nova Scotia',
-                'Ontario',
-                'Prince Edward Island',
-                'Quebec',
-                'Saskatchewan',
+                'AB' => 'Alberta',
+                'BC' => 'British Columbia',
+                'MB' => 'Manitoba',
+                'NB' => 'New Brunswick',
+                'NL' => 'Newfoundland and Labrador',
+                'NS' => 'Nova Scotia',
+                'ON' => 'Ontario',
+                'PE' => 'Prince Edward Island',
+                'QC' => 'Quebec',
+                'SK' => 'Saskatchewan',
             ],
+            'useCode' => true,
         ],
         'CC' => ['type' => null, 'names' => []],
         'CH' => [
             'type' => 'canton',
             'names' => [
-                'Aargau',
-                'Appenzell Ausserrhoden',
-                'Appenzell Innerrhoden',
-                'Basel-Landschaft',
-                'Basel-Stadt',
-                'Bern',
-                'Freiburg',
-                'Genf',
-                'Glarus',
-                'Graubünden',
-                'Jura',
-                'Luzern',
-                'Neuenburg',
-                'Nidwalden',
-                'Obwalden',
-                'Schaffhausen',
-                'Solothurn',
-                'St. Gallen',
-                'Schwyz',
-                'Thurgau',
-                'Tessin',
-                'Uri',
-                'Waadt',
-                'Wallis',
-                'Zug',
-                'Zürich',
+                'AG' => 'Aargau',
+                'AR' => 'Appenzell Ausserrhoden',
+                'AI' => 'Appenzell Innerrhoden',
+                'BL' => 'Basel-Landschaft',
+                'BS' => 'Basel-Stadt',
+                'BE' => 'Bern',
+                'FR' => 'Freiburg',
+                'GE' => 'Genève',
+                'GL' => 'Glarus',
+                'GR' => 'Graubünden',
+                'JU' => 'Jura',
+                'LU' => 'Luzern',
+                'NE' => 'Neuchâtel',
+                'NW' => 'Nidwalden',
+                'OW' => 'Obwalden',
+                'SG' => 'Sankt Gallen',
+                'SH' => 'Schaffhausen',
+                'SZ' => 'Schwyz',
+                'SO' => 'Solothurn',
+                'TG' => 'Thurgau',
+                'TI' => 'Ticino',
+                'UR' => 'Uri',
+                'VD' => 'Vaud',
+                'VS' => 'Wallis',
+                'ZG' => 'Zug',
+                'ZH' => 'Zürich',
             ],
+            'useCode' => false,
         ],
         'CI' => ['type' => null, 'names' => []],
         'CL' => [
@@ -445,23 +449,24 @@ class StateData
         'DE' => [
             'type' => 'state',
             'names' => [
-                'Baden-Württemberg',
-                'Bayern',
-                'Berlin',
-                'Brandenburg',
-                'Bremen',
-                'Hamburg',
-                'Hessen',
-                'Mecklenburg-Vorpommern',
-                'Niedersachsen',
-                'Nordrhein-Westfalen',
-                'Rheinland-Pfalz',
-                'Saarland',
-                'Sachsen',
-                'Sachsen-Anhalt',
-                'Schleswig-Holstein',
-                'Thüringen',
+                'BW' => 'Baden-Württemberg',
+                'BY' => 'Bayern',
+                'BE' => 'Berlin',
+                'BB' => 'Brandenburg',
+                'HB' => 'Bremen',
+                'HH' => 'Hamburg',
+                'HE' => 'Hessen',
+                'MV' => 'Mecklenburg-Vorpommern',
+                'NI' => 'Niedersachsen',
+                'NW' => 'Nordrhein-Westfalen',
+                'RP' => 'Rheinland-Pfalz',
+                'SL' => 'Saarland',
+                'SN' => 'Sachsen',
+                'ST' => 'Sachsen-Anhalt',
+                'SH' => 'Schleswig-Holstein',
+                'TH' => 'Thüringen',
             ],
+            'useCode' => false,
         ],
         'DK' => [
             'type' => 'region',
@@ -1239,57 +1244,58 @@ class StateData
         'US' => [
             'type' => 'state',
             'names' => [
-                'Alabama',
-                'Alaska',
-                'Arizona',
-                'Arkansas',
-                'California',
-                'Colorado',
-                'Connecticut',
-                'Delaware',
-                'Florida',
-                'Georgia',
-                'Hawaii',
-                'Idaho',
-                'Illinois',
-                'Indiana',
-                'Iowa',
-                'Kansas',
-                'Kentucky',
-                'Louisiana',
-                'Maine',
-                'Maryland',
-                'Massachusetts',
-                'Michigan',
-                'Minnesota',
-                'Mississippi',
-                'Missouri',
-                'Montana',
-                'Nebraska',
-                'Nevada',
-                'New Hampshire',
-                'New Jersey',
-                'New Mexico',
-                'New York',
-                'North Carolina',
-                'North Dakota',
-                'Ohio',
-                'Oklahoma',
-                'Oregon',
-                'Pennsylvania',
-                'Rhode Island',
-                'South Carolina',
-                'South Dakota',
-                'Tennessee',
-                'Texas',
-                'Utah',
-                'Vermont',
-                'Virginia',
-                'Washington',
-                'West Virginia',
-                'Wisconsin',
-                'Wyoming',
+                'AL' => 'Alabama',
+                'AK' => 'Alaska',
+                'AZ' => 'Arizona',
+                'AR' => 'Arkansas',
+                'CA' => 'California',
+                'CO' => 'Colorado',
+                'CT' => 'Connecticut',
+                'DE' => 'Delaware',
+                'FL' => 'Florida',
+                'GA' => 'Georgia',
+                'HI' => 'Hawaii',
+                'ID' => 'Idaho',
+                'IL' => 'Illinois',
+                'IN' => 'Indiana',
+                'IA' => 'Iowa',
+                'KS' => 'Kansas',
+                'KY' => 'Kentucky',
+                'LA' => 'Louisiana',
+                'ME' => 'Maine',
+                'MD' => 'Maryland',
+                'MA' => 'Massachusetts',
+                'MI' => 'Michigan',
+                'MN' => 'Minnesota',
+                'MS' => 'Mississippi',
+                'MO' => 'Missouri',
+                'MT' => 'Montana',
+                'NE' => 'Nebraska',
+                'NV' => 'Nevada',
+                'NH' => 'New Hampshire',
+                'NJ' => 'New Jersey',
+                'NM' => 'New Mexico',
+                'NY' => 'New York',
+                'NC' => 'North Carolina',
+                'ND' => 'North Dakota',
+                'OH' => 'Ohio',
+                'OK' => 'Oklahoma',
+                'OR' => 'Oregon',
+                'PA' => 'Pennsylvania',
+                'RI' => 'Rhode Island',
+                'SC' => 'South Carolina',
+                'SD' => 'South Dakota',
+                'TN' => 'Tennessee',
+                'TX' => 'Texas',
+                'UT' => 'Utah',
+                'VT' => 'Vermont',
+                'VA' => 'Virginia',
+                'WA' => 'Washington',
+                'WV' => 'West Virginia',
+                'WI' => 'Wisconsin',
+                'WY' => 'Wyoming',
             ],
+            'useCode' => true,
         ],
         'UY' => ['type' => null, 'names' => []],
         'UZ' => ['type' => null, 'names' => []],
@@ -1317,7 +1323,7 @@ class StateData
     {
         $targetCountryCode = strtoupper(trim($countryCode));
 
-        return isset(self::STATES[$targetCountryCode]['type']) ? self::STATES[$targetCountryCode]['type'] : null;
+        return self::STATES[$targetCountryCode]['type'] ?? null;
     }
 
     /**
@@ -1327,6 +1333,27 @@ class StateData
     {
         $targetCountryCode = strtoupper(trim($countryCode));
 
-        return isset(self::STATES[$targetCountryCode]['names']) ? self::STATES[$targetCountryCode]['names'] : [];
+        return isset(self::STATES[$targetCountryCode]['names']) ? array_values(self::STATES[$targetCountryCode]['names']) : [];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function codes(string $countryCode): array
+    {
+        $targetCountryCode = strtoupper(trim($countryCode));
+
+        if (! isset(self::STATES[$targetCountryCode]['names']) || isset(self::STATES[$targetCountryCode]['names'][0])) {
+            return [];
+        }
+
+        return array_keys(self::STATES[$targetCountryCode]['names']);
+    }
+
+    public static function useCode(string $countryCode): bool
+    {
+        $targetCountryCode = strtoupper(trim($countryCode));
+
+        return self::STATES[$targetCountryCode]['useCode'] ?? false;
     }
 }
