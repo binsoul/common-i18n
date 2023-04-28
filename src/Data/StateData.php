@@ -1222,7 +1222,21 @@ class StateData
         'SH' => ['type' => null, 'names' => []],
         'SI' => ['type' => null, 'names' => []],
         'SJ' => ['type' => null, 'names' => []],
-        'SK' => ['type' => null, 'names' => []],
+        'SK' => [
+            'type' => 'region',
+            'names' => [
+                'BC' => 'Banskobystrický kraj',
+                'BL' => 'Bratislavský kraj',
+                'KI' => 'Košický kraj',
+                'NI' => 'Nitriansky kraj',
+                'PV' => 'Prešovský kraj',
+                'TC' => 'Trenčiansky kraj',
+                'TA' => 'Trnavský kraj',
+                'ZI' => 'Žilinský kraj',
+            ],
+
+            'useCode' => false,
+        ],
         'SM' => ['type' => null, 'names' => []],
         'SN' => ['type' => null, 'names' => []],
         'SO' => ['type' => null, 'names' => []],
