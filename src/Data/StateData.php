@@ -5790,4 +5790,27 @@ class StateData
 
         return self::STATES[$targetCountryCode]['useCode'] ?? false;
     }
+
+    public static function isValidCode(string $stateCode): bool
+    {
+        if (! str_contains($stateCode, '-')) {
+            return false;
+        }
+
+        $parts = explode('-', $stateCode);
+        $targetCountryCode = strtoupper(trim($parts[0]));
+
+        if (! array_key_exists($targetCountryCode, self::STATES)) {
+            return false;
+        }
+
+        array_shift($parts);
+        $targetStateCode = strtoupper(trim(implode('-', $parts)));
+
+        if (! array_key_exists($targetStateCode, self::STATES[$targetCountryCode]['names'])) {
+            return false;
+        }
+
+        return true;
+    }
 }
