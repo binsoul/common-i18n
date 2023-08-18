@@ -1898,7 +1898,7 @@ class StateData
             ],
         ],
         'GM' => [
-            'type' => 'division',
+            'type' => 'region',
             'names' => [
                 'B' => 'Banjul',
                 'M' => 'Central River',
