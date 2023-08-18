@@ -5813,4 +5813,27 @@ class StateData
 
         return true;
     }
+
+    public static function buildCode(string $countryCode, string $stateCodeOrName): ?string
+    {
+        $targetCountryCode = strtoupper(trim($countryCode));
+
+        if (! array_key_exists($targetCountryCode, self::STATES)) {
+            return null;
+        }
+
+        $targetStateCode = mb_strtoupper(trim($stateCodeOrName));
+
+        if (array_key_exists($targetStateCode, self::STATES[$targetCountryCode]['names'])) {
+            return $targetCountryCode . '-' . $targetStateCode;
+        }
+
+        foreach (self::STATES[$targetCountryCode]['names'] as $code => $name) {
+            if (mb_strtoupper($name) === $targetStateCode) {
+                return $targetCountryCode . '-' . $code;
+            }
+        }
+
+        return null;
+    }
 }
