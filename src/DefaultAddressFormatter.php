@@ -114,7 +114,7 @@ class DefaultAddressFormatter implements AddressFormatter
         'JE' => ['%N%n%O%n%A%n%C%nJERSEY%n%Z', 'ACZ', 'CZ', null, null, null, 'JE\d[\dA-Z]? ?\d[ABD-HJLN-UW-Z]{2}'],
         'JM' => ['%N%n%O%n%A%n%C%n%S %X', 'ACS', null, null, null, null, null],
         'JO' => ['%N%n%O%n%A%n%C %Z', null, null, null, null, null, '\d{5}'],
-        'JP' => ['ÒÇÆ%Z%n%S%n%A%n%O%n%N', 'ASZ', 'S', null, null, null, '\d{3}-?\d{4}'],
+        'JP' => ['〒%Z%S%n%C%n%D%n%A%n%O%n%N', 'ASZ', 'S', null, null, null, '\d{3}-?\d{4}'],
         'KE' => ['%N%n%O%n%A%n%C%n%Z', null, null, null, null, null, '\d{5}'],
         'KG' => ['%N%n%O%n%A%n%Z %C', null, null, null, null, null, '\d{6}'],
         'KH' => ['%N%n%O%n%A%n%C %Z', null, null, null, null, null, '\d{5,6}'],
