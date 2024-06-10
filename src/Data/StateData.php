@@ -415,6 +415,7 @@ class StateData
                 'WLX' => 'Luxembourg',
                 'WNA' => 'Namur',
                 'VOV' => 'Oost-Vlaanderen',
+                'BRU' => 'Région de Bruxelles-Capitale',
                 'VBR' => 'Vlaams-Brabant',
                 'VWV' => 'West-Vlaanderen',
             ],
