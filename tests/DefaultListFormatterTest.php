@@ -6,6 +6,7 @@ namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultListFormatter;
 use BinSoul\Common\I18n\DefaultLocale;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DefaultListFormatterTest extends TestCase
@@ -24,7 +25,10 @@ class DefaultListFormatterTest extends TestCase
         self::assertEquals('a', $formatter->format(['a']));
     }
 
-    public function twoLists()
+    /**
+     * @return array<array<string>>
+     */
+    public static function twoLists(): array
     {
         return [
             ['en', 'a, b', 'a and b', 'a or b'],
@@ -32,9 +36,7 @@ class DefaultListFormatterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider twoLists
-     */
+    #[DataProvider('twoLists')]
     public function test_formats_lists_of_two_items(string $localeCode, string $simple, string $conjunction, string $disjunction): void
     {
         $locale = DefaultLocale::fromString($localeCode);
@@ -44,7 +46,10 @@ class DefaultListFormatterTest extends TestCase
         self::assertEquals($disjunction, $formatter->formatDisjunction(['a', 'b']));
     }
 
-    public function threeLists()
+    /**
+     * @return array<array<string>>
+     */
+    public static function threeLists(): array
     {
         return [
             ['en', 'a, b, c', 'a, b, and c', 'a, b, or c'],
@@ -52,9 +57,7 @@ class DefaultListFormatterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider threeLists
-     */
+    #[DataProvider('threeLists')]
     public function test_formats_lists_of_three_items(string $localeCode, string $simple, string $conjunction, string $disjunction): void
     {
         $locale = DefaultLocale::fromString($localeCode);
@@ -64,7 +67,10 @@ class DefaultListFormatterTest extends TestCase
         self::assertEquals($disjunction, $formatter->formatDisjunction(['a', 'b', 'c']));
     }
 
-    public function fiveLists()
+    /**
+     * @return array<array<string>>
+     */
+    public static function fiveLists(): array
     {
         return [
             ['en', 'a, b, c, d, e', 'a, b, c, d, and e', 'a, b, c, d, or e'],
@@ -72,9 +78,7 @@ class DefaultListFormatterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider fiveLists
-     */
+    #[DataProvider('fiveLists')]
     public function test_formats_lists_of_five_items(string $localeCode, string $simple, string $conjunction, string $disjunction): void
     {
         $locale = DefaultLocale::fromString($localeCode);

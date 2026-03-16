@@ -4,28 +4,20 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
+use Stringable;
+
 /**
  * Provides a default implementation of the {@see StoredMessage} interface.
  */
-class DefaultStoredMessage implements StoredMessage
+readonly class DefaultStoredMessage implements StoredMessage, Stringable
 {
-    /**
-     * @var Message
-     */
-    private $message;
-
-    /**
-     * @var string
-     */
-    private $format;
-
     /**
      * Constructs an instance of this class.
      */
-    public function __construct(Message $message, string $format)
-    {
-        $this->message = $message;
-        $this->format = $format;
+    public function __construct(
+        private Message $message,
+        private string $format
+    ) {
     }
 
     public function __toString(): string

@@ -4,28 +4,20 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
+use Stringable;
+
 /**
  * Provides a default implementation of the {@see Message} interface.
  */
-class DefaultMessage implements Message
+readonly class DefaultMessage implements Message, Stringable
 {
-    /**
-     * @var string
-     */
-    private $key;
-
-    /**
-     * @var string|null
-     */
-    private $domain;
-
     /**
      * Constructs an instance of this class.
      */
-    public function __construct(string $key, ?string $domain = null)
-    {
-        $this->key = $key;
-        $this->domain = $domain;
+    public function __construct(
+        private string $key,
+        private ?string $domain = null
+    ) {
     }
 
     public function __toString(): string

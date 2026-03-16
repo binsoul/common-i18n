@@ -10,9 +10,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
 class SvRule extends DefaultRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         'Ä' => 'A',
         'ä' => 'a',
         'Å' => 'a',

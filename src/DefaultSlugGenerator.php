@@ -12,30 +12,18 @@ use BinSoul\Common\I18n\Transliteration\ToAsciiRule;
  */
 class DefaultSlugGenerator implements SlugGenerator
 {
-    /**
-     * @var Locale
-     */
-    protected $locale;
+    protected Locale $locale;
 
-    /**
-     * @var string
-     */
-    protected $language;
+    protected string $language;
 
-    /**
-     * @var TransliterationRule|null
-     */
-    protected $localeRule;
+    protected ?TransliterationRule $localeRule = null;
 
-    /**
-     * @var ToAsciiRule
-     */
-    protected $toAsciiRule;
+    protected ToAsciiRule $toAsciiRule;
 
     /**
      * @var string[]
      */
-    private static $specialRules = [
+    private static array $specialRules = [
         '/[\pZ\pC]*+[&\|_\+]+[\pZ\pC]*/um' => '-', // convert concatenation signs to minus
         '/[\/\\\\]/' => '-', // convert slashes to minus
         '/[\pZ\pC]+/um' => '-', // convert white space to minus
@@ -57,6 +45,7 @@ class DefaultSlugGenerator implements SlugGenerator
         $localeRule = str_replace('DefaultRule', ucfirst($language) . 'Rule', DefaultRule::class);
 
         if (class_exists($localeRule)) {
+            /** @var class-string<TransliterationRule> $localeRule */
             $this->localeRule = new $localeRule();
         }
 
@@ -82,9 +71,8 @@ class DefaultSlugGenerator implements SlugGenerator
         $result = preg_replace(array_keys(self::$specialRules), array_values(self::$specialRules), $result);
         $result = preg_replace('/[^a-z0-9-]/i', '', (string) $result);
         $result = preg_replace('/[-]{2,}/', '-', (string) $result);
-        $result = trim((string) $result, '-');
 
-        return $result;
+        return trim((string) $result, '-');
     }
 
     public function withLocale(Locale $locale): SlugGenerator

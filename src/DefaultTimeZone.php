@@ -9,10 +9,7 @@ namespace BinSoul\Common\I18n;
  */
 class DefaultTimeZone implements TimeZone
 {
-    /**
-     * @var string
-     */
-    private $timeZone;
+    private string $timeZone;
 
     /**
      * Constructs an instance of this class.

@@ -19,9 +19,10 @@
         "php": ">=8.3"
     },
     "require-dev": {
-        "binsoul/coding-standard": "^1",
-        "phpstan/phpstan": "^1",
-        "phpunit/phpunit": "^9",
+        "binsoul/coding-standard": "^2",
+        "phpstan/phpstan": "^2",
+        "phpunit/phpunit": "^12",
+        "rector/rector": "^2",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
@@ -35,12 +36,15 @@
     "autoload-dev": {
         "psr-4": {
             "BinSoul\\Test\\Common\\I18n\\": "tests"
-        }
+        },
+        "exclude-from-classmap": [
+            "/tests/"
+        ]
     },
     "scripts": {
         "test": "phpunit",
         "fix-style": "ecs check src tests --config vendor/binsoul/coding-standard/easy-coding-standard.php --fix",
-        "analyze": "phpstan analyse -l max src"
+        "analyze": "phpstan analyse -l max src tests"
     },
     "extra": {
         "branch-alias": {

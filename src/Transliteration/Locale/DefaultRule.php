@@ -12,9 +12,9 @@ use BinSoul\Common\I18n\TransliterationRule;
 class DefaultRule implements TransliterationRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         '°' => '0',
         '¹' => '1',
         '²' => '2',

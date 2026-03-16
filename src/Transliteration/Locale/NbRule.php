@@ -10,9 +10,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
 class NbRule extends DefaultRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         'Æ' => 'AE',
         'æ' => 'ae',
         'Ø' => 'OE',

@@ -6,11 +6,15 @@ namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultLocale;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DefaultLocaleTest extends TestCase
 {
-    public function validLocales()
+    /**
+     * @return array<string, array<string>>
+     */
+    public static function validLocales(): array
     {
         return [
             'root' => ['root'],
@@ -29,15 +33,16 @@ class DefaultLocaleTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validLocales
-     */
-    public function test_parses_valid_codes($code): void
+    #[DataProvider('validLocales')]
+    public function test_parses_valid_codes(string $code): void
     {
         self::assertEquals($code, DefaultLocale::fromString($code)->getCode());
     }
 
-    public function invalidLocales()
+    /**
+     * @return array<string, array<string>>
+     */
+    public static function invalidLocales(): array
     {
         return [
             'multiple @' => ['de@foo=bar@baz=qux'],
@@ -48,10 +53,8 @@ class DefaultLocaleTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidLocales
-     */
-    public function test_throws_exception_for_invalid_code($code): void
+    #[DataProvider('invalidLocales')]
+    public function test_throws_exception_for_invalid_code(string $code): void
     {
         $this->expectException(InvalidArgumentException::class);
 

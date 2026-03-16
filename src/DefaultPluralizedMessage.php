@@ -4,29 +4,22 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
+use Stringable;
+
 /**
  * Provides a default implementation of the {@see PluralizedMessage} interface.
  */
-class DefaultPluralizedMessage implements PluralizedMessage, MessageDecorator
+readonly class DefaultPluralizedMessage implements PluralizedMessage, MessageDecorator, Stringable
 {
-    /**
-     * @var Message
-     */
-    private $message;
-
-    /**
-     * @var float
-     */
-    private $quantity;
+    private float $quantity;
 
     /**
      * Constructs an instance of this class.
-     *
-     * @param int|float $quantity
      */
-    public function __construct(Message $message, $quantity)
-    {
-        $this->message = $message;
+    public function __construct(
+        private Message $message,
+        int|float $quantity
+    ) {
         $this->quantity = (float) $quantity;
     }
 

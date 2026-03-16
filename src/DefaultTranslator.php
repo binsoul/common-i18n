@@ -9,10 +9,7 @@ namespace BinSoul\Common\I18n;
  */
 class DefaultTranslator implements Translator
 {
-    /**
-     * @var Locale
-     */
-    protected $locale;
+    protected Locale $locale;
 
     /**
      * Constructs an instance of this class.
@@ -22,7 +19,7 @@ class DefaultTranslator implements Translator
         $this->locale = $locale ?? DefaultLocale::fromString('de-DE');
     }
 
-    public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage
+    public function translate(string|Message|PluralizedMessage $key, array $parameters = [], ?string $domain = null): TranslatedMessage
     {
         if ($key instanceof Message) {
             if ($domain !== null) {
@@ -31,14 +28,14 @@ class DefaultTranslator implements Translator
 
             if ($key instanceof StoredMessage) {
                 return new DefaultTranslatedMessage(
-                    count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
+                    $parameters !== [] ? new DefaultParameterizedMessage($key, $parameters) : $key,
                     $key->getFormat(),
                     $this->locale,
                 );
             }
 
             return new DefaultTranslatedMessage(
-                count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
+                $parameters !== [] ? new DefaultParameterizedMessage($key, $parameters) : $key,
                 $key->getKey(),
                 $this->locale,
             );
@@ -47,13 +44,13 @@ class DefaultTranslator implements Translator
         $key = new DefaultMessage($key, $domain);
 
         return new DefaultTranslatedMessage(
-            count($parameters) > 0 ? new DefaultParameterizedMessage($key, $parameters) : $key,
+            $parameters !== [] ? new DefaultParameterizedMessage($key, $parameters) : $key,
             $key->getKey(),
             $this->locale
         );
     }
 
-    public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage
+    public function pluralize(string|Message $key, int|float $quantity, ?string $domain = null): PluralizedMessage
     {
         if ($key instanceof PluralizedMessage) {
             return new DefaultPluralizedMessage(new DefaultMessage($key->getKey(), $domain ?? $key->getDomain()), $quantity);

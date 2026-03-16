@@ -22,7 +22,7 @@ class ToAsciiRule implements TransliterationRule
                     $result = $converted;
                     $wasConverted = true;
                 }
-            } catch (Throwable $e) {
+            } catch (Throwable) {
                 // ignore
             }
         }

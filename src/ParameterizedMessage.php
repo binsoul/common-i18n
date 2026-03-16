@@ -12,7 +12,7 @@ interface ParameterizedMessage extends Message
     /**
      * Returns the parameters of the message.
      *
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function getParameters(): array;
 }

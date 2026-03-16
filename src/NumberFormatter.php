@@ -12,14 +12,14 @@ interface NumberFormatter
     /**
      * Formats a decimal number.
      *
-     * @param int $decimals maximum number of fractional digits
+     * @param int|null $decimals maximum number of fractional digits
      */
     public function formatDecimal(float $value, ?int $decimals = null): string;
 
     /**
      * Formats a decimal number as a percent value.
      *
-     * @param int $decimals maximum number of fractional digits
+     * @param int|null $decimals maximum number of fractional digits
      */
     public function formatPercent(float $value, ?int $decimals = null): string;
 

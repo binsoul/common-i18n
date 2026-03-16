@@ -22,7 +22,7 @@ interface TranslatedMessage extends Message
     /**
      * Returns the parameters of the message or null if no parameters were used.
      *
-     * @return mixed[]|null
+     * @return array<string, mixed>|null
      */
     public function getParameters(): ?array;
 

@@ -7,31 +7,16 @@ namespace BinSoul\Common\I18n;
 /**
  * Provides a default implementation of the {@see TranslatedMessage} interface.
  */
-class DefaultTranslatedMessage implements TranslatedMessage, MessageDecorator
+readonly class DefaultTranslatedMessage implements TranslatedMessage, MessageDecorator
 {
-    /**
-     * @var Message
-     */
-    private $message;
-
-    /**
-     * @var string
-     */
-    private $translation;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
     /**
      * Constructs an instance of this class.
      */
-    public function __construct(Message $message, string $translation, Locale $locale)
-    {
-        $this->message = $message;
-        $this->translation = $translation;
-        $this->locale = $locale;
+    public function __construct(
+        private Message $message,
+        private string $translation,
+        private Locale $locale
+    ) {
     }
 
     public function __toString(): string

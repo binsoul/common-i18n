@@ -10,9 +10,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
 class FiRule extends DefaultRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         'Ä' => 'A',
         'ä' => 'a',
         'Ö' => 'O',

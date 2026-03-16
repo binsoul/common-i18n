@@ -10,101 +10,23 @@ namespace BinSoul\Common\I18n;
 class DefaultAddress implements MutableAddress
 {
     /**
-     * @var string|null
-     */
-    private $organization;
-
-    /**
-     * @var string|null
-     */
-    private $namePrefix;
-
-    /**
-     * @var string|null
-     */
-    private $firstName;
-
-    /**
-     * @var string|null
-     */
-    private $lastName;
-
-    /**
-     * @var string|null
-     */
-    private $addressLine1;
-
-    /**
-     * @var string|null
-     */
-    private $addressLine2;
-
-    /**
-     * @var string|null
-     */
-    private $addressLine3;
-
-    /**
-     * @var string|null
-     */
-    private $sortingCode;
-
-    /**
-     * @var string|null
-     */
-    private $postalCode;
-
-    /**
-     * @var string|null
-     */
-    private $locality;
-
-    /**
-     * @var string|null
-     */
-    private $subLocality;
-
-    /**
-     * @var string|null
-     */
-    private $state;
-
-    /**
-     * @var string|null
-     */
-    private $countryCode;
-
-    /**
      * Constructs an instance of this class.
      */
     public function __construct(
-        ?string $organization = null,
-        ?string $namePrefix = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?string $addressLine1 = null,
-        ?string $addressLine2 = null,
-        ?string $addressLine3 = null,
-        ?string $sortingCode = null,
-        ?string $postalCode = null,
-        ?string $locality = null,
-        ?string $subLocality = null,
-        ?string $state = null,
-        ?string $countryCode = null
+        private ?string $organization = null,
+        private ?string $namePrefix = null,
+        private ?string $firstName = null,
+        private ?string $lastName = null,
+        private ?string $addressLine1 = null,
+        private ?string $addressLine2 = null,
+        private ?string $addressLine3 = null,
+        private ?string $sortingCode = null,
+        private ?string $postalCode = null,
+        private ?string $locality = null,
+        private ?string $subLocality = null,
+        private ?string $state = null,
+        private ?string $countryCode = null
     ) {
-        $this->organization = $organization;
-        $this->namePrefix = $namePrefix;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->addressLine1 = $addressLine1;
-        $this->addressLine2 = $addressLine2;
-        $this->addressLine3 = $addressLine3;
-        $this->sortingCode = $sortingCode;
-        $this->postalCode = $postalCode;
-        $this->locality = $locality;
-        $this->subLocality = $subLocality;
-        $this->state = $state;
-        $this->countryCode = $countryCode;
     }
 
     public function getOrganization(): ?string

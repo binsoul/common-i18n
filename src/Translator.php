@@ -13,12 +13,12 @@ interface Translator
      * Translates the given message.
      *
      * @param string|Message|PluralizedMessage $key        The message key
-     * @param mixed[]                          $parameters An array of parameters for the message
+     * @param array<string, mixed>             $parameters An array of parameters for the message
      * @param string|null                      $domain     The domain for the message or null to use the default
      *
      * @return TranslatedMessage The translated message
      */
-    public function translate($key, array $parameters = [], ?string $domain = null): TranslatedMessage;
+    public function translate(string|Message|PluralizedMessage $key, array $parameters = [], ?string $domain = null): TranslatedMessage;
 
     /**
      * Selects the plural form of the message for the given the quantity.
@@ -29,7 +29,7 @@ interface Translator
      *
      * @return PluralizedMessage The pluralized message
      */
-    public function pluralize($key, $quantity, ?string $domain = null): PluralizedMessage;
+    public function pluralize(string|Message $key, int|float $quantity, ?string $domain = null): PluralizedMessage;
 
     /**
      * Returns a new instance with the given locale.

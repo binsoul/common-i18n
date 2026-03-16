@@ -12,46 +12,6 @@ use InvalidArgumentException;
 class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 {
     /**
-     * @var string
-     */
-    private $prefix;
-
-    /**
-     * @var string
-     */
-    private $language;
-
-    /**
-     * @var string
-     */
-    private $script;
-
-    /**
-     * @var string
-     */
-    private $region;
-
-    /**
-     * @var string[]
-     */
-    private $variants;
-
-    /**
-     * @var string[][]
-     */
-    private $extensions;
-
-    /**
-     * @var string[]
-     */
-    private $modifiers;
-
-    /**
-     * @var string[]
-     */
-    private $private;
-
-    /**
      * Constructs an instance of this class.
      *
      * @param string[]   $variants
@@ -60,25 +20,20 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
      * @param string[]   $private
      */
     public function __construct(
-        string $language = 'root',
-        string $region = '',
-        string $script = '',
-        array $variants = [],
-        array $modifiers = [],
-        array $extensions = [],
-        array $private = [],
-        string $prefix = ''
+        private string $language = 'root',
+        private string $region = '',
+        private string $script = '',
+        private array $variants = [],
+        private array $modifiers = [],
+        private array $extensions = [],
+        private array $private = [],
+        private string $prefix = ''
     ) {
-        self::assertValidLanguage($language);
+        $this->assertValidLanguage($language);
 
-        $this->prefix = $prefix;
         $this->language = strtolower($language);
         $this->script = ucfirst($script);
         $this->region = strtoupper($region);
-        $this->variants = $variants;
-        $this->extensions = $extensions;
-        $this->modifiers = $modifiers;
-        $this->private = $private;
     }
 
     public static function fromString(string $code, string $separator = '-'): ParsedLocale
@@ -101,28 +56,18 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
             $modifiers = self::parseModifiers($tags[1]);
         }
 
-        if ($target === '' || $target === 'root') {
+        if ($target === '' || $target === 'root' || $separator === '') {
             return new self('root', '', '', [], $modifiers);
         }
 
         $tags = explode($separator, $target);
-
-        if ($tags === false) {
-            return new self('root', '', '', [], $modifiers);
-        }
-
-        $language = strtolower((string) array_shift($tags));
+        $language = strtolower(array_shift($tags));
 
         if (preg_match('([^a-z])', $language, $matches)) {
             // real separator differs from the expected separator
             $separator = $matches[0];
             $tags = explode($separator, $target);
-
-            if ($tags === false) {
-                return new self('root', '', '', [], $modifiers);
-            }
-
-            $language = strtolower((string) array_shift($tags));
+            $language = strtolower(array_shift($tags));
         }
 
         $prefix = '';
@@ -130,14 +75,14 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         if (strlen($language) === 1) {
             $prefix = $language;
 
-            if (count($tags) === 0) {
+            if ($tags === []) {
                 throw new InvalidArgumentException(sprintf('Expected at least a language code in "%s".', $code));
             }
 
             $language = strtolower(array_shift($tags));
         }
 
-        if (count($tags) === 0) {
+        if ($tags === []) {
             return new self($language, '', '', [], $modifiers, [], [], $prefix);
         }
 
@@ -147,17 +92,17 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
             $script = ucfirst(array_shift($tags));
         }
 
-        if (count($tags) === 0) {
+        if ($tags === []) {
             return new self($language, '', $script, [], $modifiers, [], [], $prefix);
         }
 
         $region = '';
 
-        if (count($tags) > 0 && preg_match('/([a-zA-Z]{2})|(\d{3})/', $tags[0])) {
+        if (preg_match('/([a-zA-Z]{2})|(\d{3})/', $tags[0])) {
             $region = strtoupper(array_shift($tags));
         }
 
-        if (count($tags) === 0) {
+        if ($tags === []) {
             return new self($language, $region, $script, [], $modifiers, [], [], $prefix);
         }
 
@@ -165,7 +110,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         $extensions = self::extractExtensions($tags);
         $private = self::extractPrivate($tags);
 
-        if (count($tags) > 0) {
+        if ($tags !== []) {
             throw new InvalidArgumentException(sprintf('Could not resolve all parts of "%s".', $code));
         }
 
@@ -190,11 +135,11 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
             $result .= $separator . $this->region;
         }
 
-        if (count($this->variants) > 0) {
+        if ($this->variants !== []) {
             $result .= $separator . implode($separator, $this->variants);
         }
 
-        if (count($this->extensions) > 0) {
+        if ($this->extensions !== []) {
             $parts = [];
 
             foreach ($this->extensions as $key => $values) {
@@ -204,11 +149,11 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
             $result .= $separator . implode($separator, $parts);
         }
 
-        if (count($this->private) > 0) {
+        if ($this->private !== []) {
             $result .= $separator . 'x' . $separator . implode($separator, $this->private);
         }
 
-        if (count($this->modifiers) > 0) {
+        if ($this->modifiers !== []) {
             $parts = [];
 
             foreach ($this->modifiers as $key => $value) {
@@ -265,7 +210,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
     {
         $result = clone $this;
 
-        if (count($this->variants) > 0) {
+        if ($this->variants !== []) {
             $result->variants = [];
         } elseif ($this->region !== '') {
             $result->region = '';
@@ -285,7 +230,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 
     public function isNeutral(): bool
     {
-        return $this->prefix === '' && $this->script === '' && $this->region === '' && count($this->variants) === 0;
+        return $this->prefix === '' && $this->script === '' && $this->region === '' && $this->variants === [];
     }
 
     /**
@@ -318,7 +263,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
     {
         $variants = [];
 
-        while (count($parts) > 0 && preg_match('/([a-zA-Z]{5,8})|(\d[a-zA-Z0-9]{3})/', $parts[0])) {
+        while ($parts !== [] && preg_match('/([a-zA-Z]{5,8})|(\d[a-zA-Z0-9]{3})/', $parts[0])) {
             $part = array_shift($parts);
 
             if ((string) $part === '') {
@@ -349,7 +294,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
 
             $extensions[$extension] = [];
 
-            while (count($parts) > 0 && preg_match('/([a-zA-Z]{2,8})/', $parts[0])) {
+            while ($parts !== [] && preg_match('/([a-zA-Z]{2,8})/', $parts[0])) {
                 $part = array_shift($parts);
 
                 if ((string) $part === '') {
@@ -375,7 +320,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         if (count($parts) > 1 && strtolower($parts[0]) === 'x') {
             array_shift($parts);
 
-            while (count($parts) > 0 && preg_match('/([a-zA-Z]{2,8})/', $parts[0])) {
+            while ($parts !== [] && preg_match('/([a-zA-Z]{2,8})/', $parts[0])) {
                 $part = array_shift($parts);
 
                 if ((string) $part === '') {
@@ -389,7 +334,7 @@ class DefaultLocale implements Locale, ParsedLocale, LocaleParser
         return $private;
     }
 
-    private static function assertValidLanguage(string $language): void
+    private function assertValidLanguage(string $language): void
     {
         if ($language === 'root') {
             return;

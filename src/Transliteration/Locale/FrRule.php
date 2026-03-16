@@ -10,9 +10,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
 class FrRule extends DefaultRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         'À' => 'A',
         'à' => 'a',
         'Â' => 'A',
@@ -45,7 +45,7 @@ class FrRule extends DefaultRule
         'ü' => 'u',
         'Ÿ' => 'Y',
         'ÿ' => 'y',
-        'd\'' => '',
+        "d'" => '',
     ];
 
     public function apply(string $text): string

@@ -11,15 +11,12 @@ use BinSoul\Common\I18n\Data\StateData;
  */
 class DefaultAddressFormatter implements AddressFormatter
 {
-    /**
-     * @var Locale
-     */
-    protected $locale;
+    protected Locale $locale;
 
     /**
-     * @var mixed[][]
+     * @var array<string, array<string|null>>
      */
-    private static $formats = [
+    private static array $formats = [
         /*
          * Source: https://chromium-i18n.appspot.com/ssl-address
          * Copyright 2021 Google LLC. This data is licensed by Google under the CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/) license.
@@ -227,14 +224,14 @@ class DefaultAddressFormatter implements AddressFormatter
     ];
 
     /**
-     * @var string[]
+     * @var array<string|null>
      */
-    private static $defaultFormat = ['%N%n%O%n%A%n%C', 'AC', 'C', null, null, null, null];
+    private static array $defaultFormat = ['%N%n%O%n%A%n%C', 'AC', 'C', null, null, null, null];
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private $tokens = [
+    private array $tokens = [
         '%S' => '', //admin area / state
         '%C' => '', //locality / city
         '%O' => '', //organization
@@ -258,7 +255,7 @@ class DefaultAddressFormatter implements AddressFormatter
     {
         $addressFormat = self::$formats[strtoupper(trim((string) $address->getCountryCode()))] ?? self::$defaultFormat;
 
-        $format = $addressFormat[0] ?? self::$defaultFormat[0];
+        $format = (string) ($addressFormat[0] ?? self::$defaultFormat[0]);
 
         if (! strpos($format, '%R')) {
             $format .= '%n%R';
@@ -293,15 +290,14 @@ class DefaultAddressFormatter implements AddressFormatter
         $result = preg_replace('/\n+/', "\n", $result) ?? $result;
         $result = preg_replace('/ +/', ' ', $result) ?? $result;
         $result = preg_replace('/ \n/', '', $result) ?? $result;
-        $result = trim($result);
 
-        return $result;
+        return trim($result);
     }
 
     public function generateUsageTemplate(string $countryCode): Address
     {
         $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
-        $format = $addressFormat[0] ?? self::$defaultFormat[0];
+        $format = (string) ($addressFormat[0] ?? self::$defaultFormat[0]);
 
         if (! strpos($format, '%R')) {
             $format .= '%n%R';
@@ -326,7 +322,7 @@ class DefaultAddressFormatter implements AddressFormatter
         $data = $mapping;
 
         foreach (array_keys($this->tokens) as $token) {
-            if (strpos($format, $token) !== false) {
+            if (str_contains($format, $token)) {
                 foreach ($mapping as $argument => $mappedData) {
                     if ($mappedData === $token) {
                         $data[$argument] = 'optional';
@@ -336,13 +332,13 @@ class DefaultAddressFormatter implements AddressFormatter
         }
 
         $required = $addressFormat[1] ?? self::$defaultFormat[1];
-        $requiredTokens = str_split($required);
+        $requiredTokens = str_split((string) $required);
 
         if (! in_array('R', $requiredTokens, true)) {
             $requiredTokens[] = 'R';
         }
 
-        if (strpos($format, '%Z') !== false) {
+        if (str_contains($format, '%Z')) {
             $requiredTokens[] = 'Z';
         }
 
@@ -435,11 +431,11 @@ class DefaultAddressFormatter implements AddressFormatter
         $addressFormat = self::$formats[strtoupper(trim($countryCode))] ?? self::$defaultFormat;
         $format = $addressFormat[0] ?? self::$defaultFormat[0];
 
-        if (! strpos($format, '%R')) {
+        if (! strpos((string) $format, '%R')) {
             $format .= '%n%R';
         }
 
-        $lines = explode('%n', $format);
+        $lines = explode('%n', (string) $format);
         $row = 1;
 
         foreach ($lines as $line) {
@@ -452,7 +448,7 @@ class DefaultAddressFormatter implements AddressFormatter
                 }
 
                 foreach (array_keys($this->tokens) as $token) {
-                    if (strpos($fields, $token) !== 0) {
+                    if (! str_starts_with($fields, $token)) {
                         continue;
                     }
 

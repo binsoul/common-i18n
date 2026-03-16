@@ -10,9 +10,9 @@ namespace BinSoul\Common\I18n\Transliteration\Locale;
 class PlRule extends DefaultRule
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
-    private static $map = [
+    private static array $map = [
         'Ą' => 'A',
         'ą' => 'a',
         'Ć' => 'C',

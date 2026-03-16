@@ -4,30 +4,22 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
+use Stringable;
+
 /**
  * Provides a default implementation of the {@see ParameterizedMessage} interface.
  */
-class DefaultParameterizedMessage implements ParameterizedMessage, MessageDecorator
+readonly class DefaultParameterizedMessage implements ParameterizedMessage, MessageDecorator, Stringable
 {
-    /**
-     * @var Message
-     */
-    private $message;
-
-    /**
-     * @var mixed[]
-     */
-    private $parameters;
-
     /**
      * Constructs an instance of this class.
      *
-     * @param mixed[] $parameters
+     * @param array<string, mixed> $parameters
      */
-    public function __construct(Message $message, array $parameters = [])
-    {
-        $this->message = $message;
-        $this->parameters = $parameters;
+    public function __construct(
+        private Message $message,
+        private array $parameters = []
+    ) {
     }
 
     public function __toString(): string

@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
-function message(string $key, ?string $domain = null, ?array $parameters = null, ?float $quantity = null)
+/**
+ * @param array<string, mixed>|null $parameters
+ *
+ * @phpstan-return ($quantity is int|float ? DefaultPluralizedMessage : ($parameters is array ? DefaultParameterizedMessage : DefaultMessage))
+ */
+function message(string $key, ?string $domain = null, ?array $parameters = null, float|int|null $quantity = null): DefaultMessage|DefaultParameterizedMessage|DefaultPluralizedMessage
 {
     $result = new DefaultMessage($key, $domain);
 
-    if ($parameters !== null && count($parameters) > 0) {
+    if ($parameters !== null && $parameters !== []) {
         $result = new DefaultParameterizedMessage($result, $parameters);
     }
 

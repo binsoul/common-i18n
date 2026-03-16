@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace BinSoul\Common\I18n;
 
+use Stringable;
+
 /**
  * Provides a default implementation of the {@see ListFormatter} interface.
  */
 class DefaultListFormatter implements ListFormatter
 {
-    /**
-     * @var Locale
-     */
-    protected $locale;
+    protected Locale $locale;
 
     /**
-     * @var string[][]
+     * @var array<string, array<array<string>>>
      */
-    private static $formats = [
+    private static array $formats = [
         'en' => [
             ['{0}, {1}', '{0}, {1}', '{0}, {1}', '{0}, {1}'],
             ['{0} and {1}', '{0}, {1}', '{0}, {1}', '{0}, and {1}'],
@@ -31,9 +30,9 @@ class DefaultListFormatter implements ListFormatter
     ];
 
     /**
-     * @var string[][]
+     * @var array<array<string>>
      */
-    private $format;
+    private array $format;
 
     /**
      * Constructs an instance of this class.
@@ -43,7 +42,7 @@ class DefaultListFormatter implements ListFormatter
         $this->locale = $locale ?? DefaultLocale::fromString('de-DE');
 
         $format = null;
-        $parsedLocale = DefaultLocale::fromString($locale->getCode());
+        $parsedLocale = DefaultLocale::fromString($this->locale->getCode());
 
         while (! $parsedLocale->isRoot()) {
             if (isset(self::$formats[$parsedLocale->getCode()])) {
@@ -86,6 +85,18 @@ class DefaultListFormatter implements ListFormatter
         return new self($locale);
     }
 
+    protected function toString(string|int|float|bool|null|Stringable $value): string
+    {
+        if ($value === null) {
+            return '';
+        }
+
+        return (string) $value;
+    }
+
+    /**
+     * @param array<string|int|float|bool|null|Stringable> $values
+     */
     private function build(array $values, string $listTwoPattern, string $listStartPattern, string $listMiddlePattern, string $listEndPattern): string
     {
         $items = array_values($values);
@@ -96,22 +107,22 @@ class DefaultListFormatter implements ListFormatter
                 return '';
 
             case 1:
-                return (string) $items[0];
+                return $this->toString($items[0]);
 
             case 2:
-                return $this->join($listTwoPattern, (string) $items[0], (string) $items[1]);
+                return $this->join($listTwoPattern, $this->toString($items[0]), $this->toString($items[1]));
         }
 
-        $result = $this->join($listStartPattern, (string) $items[0], (string) $items[1]);
+        $result = $this->join($listStartPattern, $this->toString($items[0]), $this->toString($items[1]));
 
         for ($i = 2; $i < $count - 1; $i++) {
-            $result = $this->join($listMiddlePattern, $result, (string) $items[$i]);
+            $result = $this->join($listMiddlePattern, $result, $this->toString($items[$i]));
         }
 
-        return $this->join($listEndPattern, $result, (string) $items[$count - 1]);
+        return $this->join($listEndPattern, $result, $this->toString($items[$count - 1]));
     }
 
-    private function join($pattern, $first, $second): string
+    private function join(string $pattern, string $first, string $second): string
     {
         return str_replace(['{0}', '{1}'], [$first, $second], $pattern);
     }

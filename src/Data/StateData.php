@@ -12,8 +12,10 @@ class StateData
     /**
      * @see https://en.wikipedia.org/wiki/Category:ISO_3166
      * @see https://www.iso.org/obp/ui/#iso:code:3166:XX
+     *
+     * @var array<string, array{type: string|null, names: array<string, string>}>
      */
-    private const STATES = [
+    private const array STATES = [
         'AD' => [
             'type' => 'parish',
             'names' => [
