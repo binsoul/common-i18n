@@ -140,4 +140,15 @@ class DefaultAddressFormatterTest extends TestCase
         self::assertEquals('6,2', $address->getLocality());
         self::assertNull($address->getState());
     }
+
+    public function test_returns_instance_with_new_locale(): void
+    {
+        $en = DefaultLocale::fromString('en');
+        $de = DefaultLocale::fromString('de');
+        $formatter = new DefaultAddressFormatter($en);
+        self::assertSame($formatter, $formatter->withLocale($en));
+
+        $newFormatter = $formatter->withLocale($de);
+        self::assertNotSame($formatter, $newFormatter);
+    }
 }

@@ -21,6 +21,12 @@ class DefaultTimeZoneTest extends TestCase
         $timeZone = new DefaultTimeZone();
         self::assertEquals($currentTimeZone, $timeZone->getName());
 
+        $timeZone = new DefaultTimeZone();
+        self::assertEquals($currentTimeZone, $timeZone->getName());
+
+        $timeZone = new DefaultTimeZone('');
+        self::assertEquals($currentTimeZone, $timeZone->getName());
+
         date_default_timezone_set('Europe/Berlin');
         $timeZone = new DefaultTimeZone();
         self::assertEquals('Europe/Berlin', $timeZone->getName());

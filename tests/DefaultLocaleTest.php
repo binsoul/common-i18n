@@ -17,26 +17,36 @@ class DefaultLocaleTest extends TestCase
     public static function validLocales(): array
     {
         return [
-            'root' => ['root'],
-            'English' => ['en'],
-            'Brazilian Portuguese' => ['pt-BR'],
-            'French with Latin script' => ['fr-Latn'],
-            'Min Nan Chinese as spoken in Taiwan using traditional Han characters' => ['nan-Hant-TW'],
-            'Klingon private' => ['x-klingon'],
-            'Klingon ISO' => ['tlh'],
-            'Arabic-language content using Basic Latin digits' => ['ar-u-nu-latn'],
-            'Hebrew in Israel, traditional Hebrew calendar, Jerusalem time zone' => ['he-IL-u-ca-hebrew-tz-jeruslm'],
-            'German with private extension' => ['de-DE-x-foobar'],
-            'German with phonebook collation' => ['de-DE@collation=phonebook;foo=bar'],
-            'German with Posix and 1911 variant' => ['de-DE-POSIX-1911'],
-            'root with phonebook collation' => ['root@collation=phonebook'],
+            'root' => ['root', 'root'],
+            'English' => ['en', 'en'],
+            'Brazilian Portuguese' => ['pt-BR', 'pt-BR'],
+            'French with Latin script' => ['fr-Latn', 'fr-Latn'],
+            'Min Nan Chinese as spoken in Taiwan using traditional Han characters' => ['nan-Hant-TW', 'nan-Hant-TW'],
+            'Klingon private' => ['x-klingon', 'x-klingon'],
+            'Klingon ISO' => ['tlh', 'tlh'],
+            'Arabic-language content using Basic Latin digits' => ['ar-u-nu-latn', 'ar-u-nu-latn'],
+            'Hebrew in Israel, traditional Hebrew calendar, Jerusalem time zone' => ['he-IL-u-ca-hebrew-tz-jeruslm', 'he-IL-u-ca-hebrew-tz-jeruslm'],
+            'German with private extension' => ['de-DE-x-foobar', 'de-DE-x-foobar'],
+            'German with phonebook collation' => ['de-DE@collation=phonebook;foo=bar', 'de-DE@collation=phonebook;foo=bar'],
+            'German with Posix and 1911 variant' => ['de-DE-POSIX-1911', 'de-DE-POSIX-1911'],
+            'root with phonebook collation' => ['root@collation=phonebook', 'root@collation=phonebook'],
+            'root only with modifier' => ['root@foo=bar', 'root@foo=bar'],
+            'empty with modifier' => ['@foo=bar', 'root@foo=bar'],
+            'multiple extension values' => ['en-u-ca-gregory-nu-latn', 'en-u-ca-gregory-nu-latn'],
+            'numeric variant' => ['de-DE-1901', 'de-DE-1901'],
+            'prefix and language' => ['x-en', 'x-en'],
+            'multiple extensions' => ['en-u-ca-gregory-t-abc', 'en-u-ca-gregory-t-abc'],
+            'multiple private values' => ['de-x-abc-def', 'de-x-abc-def'],
+            'language length 3' => ['eng', 'eng'],
+            'language length 5' => ['abcde', 'abcde'],
+            'language length 8' => ['abcdefgh', 'abcdefgh'],
         ];
     }
 
     #[DataProvider('validLocales')]
-    public function test_parses_valid_codes(string $code): void
+    public function test_parses_valid_codes(string $code, string $expected): void
     {
-        self::assertEquals($code, DefaultLocale::fromString($code)->getCode());
+        self::assertEquals($expected, DefaultLocale::fromString($code)->getCode());
     }
 
     /**
@@ -50,6 +60,12 @@ class DefaultLocaleTest extends TestCase
             'unresolvable parts' => ['de-x-a'],
             'invalid language' => ['dede'],
             'invalid modifier' => ['de@foo'],
+            'too many @' => ['de@foo=bar@baz=qux'],
+            'prefix without language' => ['x-'],
+            'separator mismatch' => ['de-DE@foo'],
+            'invalid language length 4' => ['abcd'],
+            'invalid language length 9' => ['abcdefghi'],
+            'unresolvable parts after region' => ['de-DE-!'],
         ];
     }
 
@@ -98,6 +114,12 @@ class DefaultLocaleTest extends TestCase
 
     public function test_get_parent(): void
     {
+        $locale = DefaultLocale::fromString('de-DE');
+        $locale = $locale->getParent();
+        self::assertEquals('de', $locale->getCode());
+        $locale = $locale->getParent();
+        self::assertEquals('root', $locale->getCode());
+
         $locale = DefaultLocale::fromString('x-de-Latn-CH-POSIX-u-ca-hebrew-x-abc@foo=bar');
         $locale = $locale->getParent();
         self::assertEquals('x-de-Latn-CH-u-ca-hebrew-x-abc@foo=bar', $locale->getCode());

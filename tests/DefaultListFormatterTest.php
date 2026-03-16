@@ -6,6 +6,7 @@ namespace BinSoul\Test\Common\I18n;
 
 use BinSoul\Common\I18n\DefaultListFormatter;
 use BinSoul\Common\I18n\DefaultLocale;
+use BinSoul\Common\I18n\DefaultMessage;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -86,5 +87,37 @@ class DefaultListFormatterTest extends TestCase
         self::assertEquals($simple, $formatter->format(['a', 'b', 'c', 'd', 'e']));
         self::assertEquals($conjunction, $formatter->formatConjunction(['a', 'b', 'c', 'd', 'e']));
         self::assertEquals($disjunction, $formatter->formatDisjunction(['a', 'b', 'c', 'd', 'e']));
+    }
+
+    public function test_with_locale(): void
+    {
+        $en = DefaultLocale::fromString('en');
+        $de = DefaultLocale::fromString('de');
+        $formatter = new DefaultListFormatter($en);
+        self::assertSame($formatter, $formatter->withLocale($en));
+
+        $newFormatter = $formatter->withLocale($de);
+        self::assertNotSame($formatter, $newFormatter);
+        self::assertEquals('a und b', $newFormatter->formatConjunction(['a', 'b']));
+    }
+
+    public function test_null_locale(): void
+    {
+        $formatter = new DefaultListFormatter();
+        // Should default to de-DE
+        self::assertEquals('a und b', $formatter->formatConjunction(['a', 'b']));
+    }
+
+    public function test_unsupported_locale(): void
+    {
+        $formatter = new DefaultListFormatter(DefaultLocale::fromString('zz-YY'));
+        // Should fallback to en
+        self::assertEquals('a and b', $formatter->formatConjunction(['a', 'b']));
+    }
+
+    public function test_string_conversions(): void
+    {
+        $formatter = new DefaultListFormatter(DefaultLocale::fromString('en'));
+        self::assertEquals('test, 1, , , 1.5, foobar', $formatter->format(['test', 1, false, null, 1.5, new DefaultMessage('foobar')]));
     }
 }
